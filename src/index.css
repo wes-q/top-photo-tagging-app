@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.specific .active {
+    @apply bg-cyan-400 text-gray-800 hover:underline rounded-md px-4 py-1;
+}
+
+.font-handlee {
+    font-family: "Handlee", cursive;
+}
+
+.font-nunito {
+    font-family: "Nunito", "sans";
+}
