@@ -1,11 +1,6 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-import BellIcon from "../icons/bell.svg?react";
-import MessengerIcon from "../icons/messenger.svg?react";
-import PlusIcon from "../icons/plus.svg?react";
-import CogIcon from "../icons/cog.svg?react";
 
 // const Game1 = () => {
 //     // const [isTargeting, setIsTargeting] = useState(false);
@@ -107,18 +102,15 @@ const Game1 = () => {
 
         // Calculate the dotSize as a percentage of the image's dimensions
         setDotSize(Math.min(imageWidth, imageHeight) * 0.05); // Adjust as needed
-        //718 - 24 - 39.6/2 / 792 - maxwidth viewport
-        //543 - 24 - 29.5/2 / 591 - smallwidth viewport
+
         const x = ((event.clientX - rect.left - dotSize / 2) / imageWidth) * 100;
         const y = ((event.clientY - rect.top - dotSize / 2) / imageHeight) * 100;
-        // const x = event.clientX - rect.left - dotSize / 2;
-        // const y = event.clientY - rect.top - dotSize / 2;
-        console.log(`ClientX: ${event.clientX}`);
-        console.log(`Rect.left: ${rect.left}`);
-        console.log(`Dotsize: ${dotSize}`);
-        console.log(`imageWidth: ${imageWidth}`);
-        console.log(`X: ${x}`);
-        console.log(`Y: ${y}`);
+        // console.log(`ClientX: ${event.clientX}`);
+        // console.log(`Rect.left: ${rect.left}`);
+        // console.log(`Dotsize: ${dotSize}`);
+        // console.log(`imageWidth: ${imageWidth}`);
+        // console.log(`X: ${x}`);
+        // console.log(`Y: ${y}`);
         // console.log(`Rect.top: ${rect.top}`);
         setX(x);
         setY(y);
@@ -126,8 +118,7 @@ const Game1 = () => {
 
     return (
         <>
-            <div>Game1</div>
-            <div className="relative w-fit">
+            <div className="relative w-fit mx-auto">
                 <img className=" cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
                 {open && (
                     <>
@@ -143,6 +134,19 @@ const Game1 = () => {
                         <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} />}</AnimatePresence>
                     </>
                 )}
+                <div className="fixed right-0 top-56 bg-gray-800 rounded-md h-10 w-10 border">
+                    <div className="flex flex-col ">
+                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("pichu")}>
+                            <img className="" src="/pichu.jpg" alt="pichu" />
+                        </button>
+                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("iceclimbers")}>
+                            <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
+                        </button>
+                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("mrgame")}>
+                            <img className="" src="/mrgame.jpg" alt="mr game" />
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     );
