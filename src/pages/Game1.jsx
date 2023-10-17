@@ -7,7 +7,8 @@ const Game1 = ({ setShowFooter }) => {
     const [y, setY] = useState(0);
     const [open, setOpen] = useState(false);
     const [dotSize, setDotSize] = useState(0);
-    const audioRef = useRef(null);
+    const audioRefCoin = useRef(null);
+    const audioRefHit = useRef(null);
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
     const imageRef = useRef(null);
@@ -36,12 +37,14 @@ const Game1 = ({ setShowFooter }) => {
                     character3: true,
                 }));
                 // Play successful sound que
-                if (audioRef.current) {
-                    audioRef.current.play();
+                if (audioRefCoin.current) {
+                    audioRefCoin.current.play();
                 }
             } else {
                 // shake animation and sound and red flash
-                // alert("Thats not mr. Game");
+                if (audioRefHit.current) {
+                    audioRefHit.current.play();
+                }
             }
         }
     };
@@ -87,20 +90,17 @@ const Game1 = ({ setShowFooter }) => {
         setY(y);
     };
 
-    const playSound = () => {
-        // Access the audio element using the ref and play it
-        if (audioRef.current) {
-            audioRef.current.play();
-        }
-    };
-
     return (
         <>
-            <audio ref={audioRef}>
+            <audio ref={audioRefCoin}>
                 <source src="/mixkit-retro-game-notification-212.wav" type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
-            <button onClick={playSound}>SOUND</button>
+            <audio ref={audioRefHit}>
+                <source src="/mixkit-small-hit-in-a-game-2072.wav" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+
             <div className="relative w-fit mx-auto">
                 <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
                 {open && (
