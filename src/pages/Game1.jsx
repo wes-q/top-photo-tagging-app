@@ -1,89 +1,60 @@
-import React from "react";
-import { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AnimCheck from "../icons/anim-check.svg?react";
 
-// const Game1 = () => {
-//     // const [isTargeting, setIsTargeting] = useState(false);
-//     const [x, setX] = useState(0);
-//     const [y, setY] = useState(0);
-//     const dotSize = 40; // Adjust as needed
-
-//     const [open, setOpen] = useState(false);
-//     const dropdownRef = useRef(null);
-//     const buttonRef = useRef(null);
-
-//     const handleClickOutside = (event) => {
-//         //Set to false if the dropdown is open, the click did not occur inside the dropdown and the click did not occur inside the button that opens the dropdown
-//         if (open && dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
-//             setOpen(false);
-//         }
-//     };
-
-//     const handleClick = (event) => {
-//         // setIsTargeting(!isTargeting);
-//         setOpen(!open);
-//         const image = event.target;
-//         const rect = image.getBoundingClientRect();
-
-//         // Take into account the width and height depending on the viewport
-//         const targetWidth = rect.width;
-//         const targetHeight = rect.height;
-
-//         // Calculate the dot's position, taking into account the dot's size
-//         const x = event.clientX - rect.left - dotSize / 2;
-//         const y = event.clientY - rect.top - dotSize / 2;
-//         // const x = ((event.clientX - rect.left - dotSize / 2) / targetWidth) * 100;
-//         // const y = ((event.clientY - rect.top - dotSize / 2) / targetHeight) * 100;
-
-//         setX(x);
-//         setY(y);
-//         console.log(`X: ${x}`);
-//         console.log(`Y: ${y}`);
-//     };
-
-//     const handleImageClick = (event) => {
-//         // Get the click coordinates relative to the image
-//         const image = event.target;
-//         const rect = image.getBoundingClientRect();
-//         const x = event.clientX - rect.left;
-//         const y = event.clientY - rect.top;
-//     };
-
-//     return (
-//         <>
-//             <div>Game1</div>
-//             <div className="relative">
-//                 <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} />
-//                 {/* {isTargeting && <div className={`absolute text-2xl font-bold left-${x}px`}>Hello!</div>} */}
-//                 {/* {isTargeting && <div className={`absolute text-2xl font-bold left-[${x}px]`}>Hello!</div>} */}
-//                 {/* {isTargeting && <div className="absolute text-2xl font-bold left-[50px]">Hello!</div>} */}
-//                 {open && (
-//                     <>
-//                         <div
-//                             className="absolute bg-gray-600 opacity-50 border-2 border-dashed border-white rounded-full cursor-crosshair"
-//                             style={{
-//                                 width: dotSize + "px",
-//                                 height: dotSize + "px",
-//                                 left: x + "px",
-//                                 top: y + "px",
-//                             }}
-//                         ></div>
-//                         <AnimatePresence>{open && <DropdownMenu x={x} y={y} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} />}</AnimatePresence>
-//                     </>
-//                 )}
-//             </div>
-//         </>
-//     );
-// };
-
-const Game1 = () => {
+const Game1 = ({ setShowFooter }) => {
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
     const [open, setOpen] = useState(false);
     const [dotSize, setDotSize] = useState(0);
+    const audioRef = useRef(null);
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
     const imageRef = useRef(null);
+    const [characterFound, setCharacterFound] = useState({
+        character1: false,
+        character2: false,
+        character3: false,
+    });
+
+    // Function to toggle the found state of a character
+    const toggleCharacterFound = (characterName) => {
+        setCharacterFound((prevFound) => ({
+            ...prevFound,
+            [characterName]: !prevFound[characterName],
+        }));
+    };
+
+    const handleSubmit = (character) => {
+        if (character === "mrgame") {
+            //if x is between 650 and 692
+            //and y is between 662 and 700
+            if (x >= 80.7 && x <= 88.03 && y >= 53.51 && y <= 58.56) {
+                //alert("You have found mr. Game");
+                setCharacterFound((prevFound) => ({
+                    ...prevFound,
+                    character3: true,
+                }));
+                // Play successful sound que
+                if (audioRef.current) {
+                    audioRef.current.play();
+                }
+            } else {
+                // shake animation and sound and red flash
+                // alert("Thats not mr. Game");
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Set showFooter to false when the component mounts
+        setShowFooter(false);
+
+        // Return a cleanup function to set showFooter to true when the component unmounts
+        return () => {
+            setShowFooter(true);
+        };
+    }, []);
 
     const handleClickOutside = (event) => {
         if (open && dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
@@ -116,10 +87,22 @@ const Game1 = () => {
         setY(y);
     };
 
+    const playSound = () => {
+        // Access the audio element using the ref and play it
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
+
     return (
         <>
+            <audio ref={audioRef}>
+                <source src="/mixkit-retro-game-notification-212.wav" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+            <button onClick={playSound}>SOUND</button>
             <div className="relative w-fit mx-auto">
-                <img className=" cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
+                <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
                 {open && (
                     <>
                         <div
@@ -131,40 +114,67 @@ const Game1 = () => {
                                 top: y + "%",
                             }}
                         ></div>
-                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} />}</AnimatePresence>
+                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} />}</AnimatePresence>
                     </>
                 )}
-                <div className="fixed right-0 top-56 bg-gray-800 rounded-md h-10 w-10 border">
-                    <div className="flex flex-col ">
-                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("pichu")}>
-                            <img className="" src="/pichu.jpg" alt="pichu" />
-                        </button>
-                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("iceclimbers")}>
-                            <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
-                        </button>
-                        <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("mrgame")}>
-                            <img className="" src="/mrgame.jpg" alt="mr game" />
-                        </button>
+            </div>
+            <div className="fixed h-20 w-full bottom-0 bg-gray-800 p-4 text-xs">
+                <div className="flex items-center justify-center">
+                    <div className="flex gap-1 items-center w-full transition-colors">
+                        <img className="h-auto max-h-12 w-10" src="/pichu-vector.png" alt="pichu" />
+                        <div className="flex flex-col justify-start w-20 items-start text-left">
+                            <div>
+                                {characterFound.character1 ? (
+                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
+                                        <AnimCheck className="w-5 h-5" />
+                                    </motion.div>
+                                ) : (
+                                    <div className="w-5 h-5"></div>
+                                )}
+                            </div>
+                            <span>Pichu</span>
+                        </div>
+                    </div>
+                    <div className="flex gap-1 items-center w-full transition-colors">
+                        <img className="h-auto max-h-12 w-10" src="/ice-climbers-vector.png" alt="ice climbers" />
+                        <div className="flex flex-col justify-start w-20 items-start text-left">
+                            <div>
+                                {characterFound.character2 ? (
+                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
+                                        <AnimCheck className="w-5 h-5" />
+                                    </motion.div>
+                                ) : (
+                                    <div className="w-5 h-5"></div>
+                                )}
+                            </div>
+                            <span>Ice Climbers</span>
+                        </div>
+                    </div>
+                    <div className="flex gap-1 items-center w-full transition-colors">
+                        <img className="h-auto max-h-12 w-10 select-none" src="/mrgame-vector.png" alt="mr game" />
+                        <div className="flex flex-col justify-start w-20 items-start text-left">
+                            <div>
+                                {characterFound.character3 ? (
+                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
+                                        <AnimCheck className="w-5 h-5" />
+                                    </motion.div>
+                                ) : (
+                                    <div className="w-5 h-5"></div>
+                                )}
+                            </div>
+                            <span className=" select-none">Mr. Game</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </>
     );
 };
+
 //80.7 88.03 53.51 58.56
-function DropdownMenu({ dropdownRef, x, y, dotSize }) {
-    const handleSubmit = (character) => {
-        if (character === "mrgame") {
-            //if x is between 650 and 692
-            //and y is between 662 and 700
-            if (x >= 80.7 && x <= 88.03 && y >= 53.51 && y <= 58.56) {
-                alert("You have found mr. Game");
-            } else {
-                // shake animation and sound and red flash
-                alert("Thats not mr. Game");
-            }
-        }
-    };
+function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit }) {
+    // Dropdown should conditionally appear to the left or right to avoid overflow
+    const menuAdjustX = x > 80 ? -dotSize * 2.5 : dotSize * 1.5;
 
     return (
         <motion.div
@@ -174,8 +184,8 @@ function DropdownMenu({ dropdownRef, x, y, dotSize }) {
                 top: y + "%",
                 width: dotSize * 2,
             }}
-            initial={{ opacity: 0, scale: 0.3, x: dotSize * 1.5 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.3 }}
+            animate={{ opacity: 1, scale: 1, x: menuAdjustX }}
             exit={{ opacity: 0, scale: 0.3 }}
             transition={{ duration: 0.2, ease: "easeIn" }}
             ref={dropdownRef}
@@ -191,7 +201,6 @@ function DropdownMenu({ dropdownRef, x, y, dotSize }) {
                     <img className="" src="/mrgame.jpg" alt="mr game" />
                 </button>
             </div>
-            {/* style={{ height: dotSize * 5, width: dotSize * 5 }} */}
         </motion.div>
     );
 }
