@@ -1,0 +1,227 @@
+GET https://integration-api-6cas.onrender.com/auth/login/success
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Cookie: connect.sid=s%3A1AdIg8UFMT8RnItUBBpkYFRrb71ltCE5.KydNuBbu2NiQFZjInAZvAgbQUZW%2B8wiZALTW%2FWvxHlo
+Origin: http://localhost:5173
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-GPC: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+sec-ch-ua: "Brave";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+###
+GET http://localhost:3001/auth/login/success
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Cookie: connect.sid=s%3A1AdIg8UFMT8RnItUBBpkYFRrb71ltCE5.KydNuBbu2NiQFZjInAZvAgbQUZW%2B8wiZALTW%2FWvxHlo
+Host: localhost:3001
+Origin: http://localhost:5173
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-GPC: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+sec-ch-ua: "Brave";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+###
+GET /auth/login/success HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Cookie: connect.sid=s%3AxGOwTNXloAvD-s7zTMozFyr211LVEEZE.ZghAF30XkkwvbELAhDi2FdtdgguPD1lHPTwO2%2BRMRZ8
+Host: localhost:3001
+Origin: http://localhost:5173
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-GPC: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+sec-ch-ua: "Brave";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+###
+GET http://localhost:3001/api/anecdotes/
+
+###
+GET http://localhost:3001/api/users/
+
+###
+POST http://localhost:3001/api/anecdotes/
+content-type: application/json
+
+{
+    "content": "If it hurts, do it more often",
+    "author": "Jez Humble",
+    "info": "https://martinfowler.com/bliki/FrequencyReducesDifficulty.html",
+    "votes": 21
+}
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+{
+    "displayName": "s ",
+    "password": "12345678",
+    "email": "piuskjhg@gmail.com",
+    "source": "lsocal",
+    "isVerified": true
+}
+
+###
+GET http://localhost:3001/hello?person=%3Cb%3EJohn%3C/b%3E
+
+###
+GET http://localhost:3001/hello?person=<b>john</b>
+
+###
+POST http://localhost:3001/api/anecdotes/
+content-type: application/json
+
+{
+    "content": "Pr",
+    "author": "Donald Knuth",
+    "info": "http://wiki.c2.com/?PrematureOptimization",
+    "votes": 1
+}
+
+###
+POST http://localhost:3001/api/anecdotes/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ0Y2ViZjNhZDU0MTMwYTE1MzU4YiIsImlhdCI6MTY5NjQ3OTI0OCwiZXhwIjoxNjk2NDgyODQ4fQ.7r50zQFjpBv1kkvLNE3iMToKrrJoSsohSLTmmSoQ5Hc
+
+{
+    "content": "Premature optimization is the root of all evil",
+    "author": "Donald Knuth",
+    "info": "http://wiki.c2.com/?PrematureOptimization",
+    "votes": 1
+}
+###
+GET http://localhost:3001/api/login-local/success
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjRjN2UxMzZmYTVjOTBjMzQ4YzAxOSIsImlhdCI6MTY5NzA3OTAwOCwiZXhwIjoxNjk3MDgyNjA4fQ.RDmo00uG5jOIP2v2_LpNExX6yhjJh8z-b72tWlnABFo
+
+###
+GET http://localhost:3001/api/verify-email/?token=$2b$10$bGdf1GZ6JfSZrFyRVceWueHYE7qHYAfjsGezPkQuU/I.OFEBdNbf6
+
+###
+POST http://localhost:3001/api/login-local/
+content-type: application/json
+
+{
+    "email": "anoyorenelyn@gmail.com",
+    "password": "11111111"
+}
+
+###
+GET http://localhost:3001/api/send-verification-email
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWVhNzFmZmI0NDEyMmUzNzdlNDQzMSIsImlhdCI6MTY5NjUxNTI0NywiZXhwIjoxNjk2NTE4ODQ3fQ.HC_eh1t4rOXIxp_Z7qrKDmgpM9gmTSCbjquxI6mHMDY
+
+
+
+
+# ###
+# GET http://localhost:3001/info/
+
+# ###
+# GET  http://localhost:3001/api/persons/1
+
+# ###
+# GET  http://localhost:3001/api/persons/64d63c45e3583a8cc2dd1ba8
+
+# ###
+# DELETE http://localhost:3001/api/persons/64d63c1eb5a442d2a637326f
+
+###
+PUT http://localhost:3001/api/users/6524c7e136fa5c90c348c019
+content-type: application/json
+
+{
+    "displayName":"Vincen21zo",
+    "profilePhoto":"http://localhost:3001/static/bank.jpg"
+}
+
+###
+POST http://localhost:3001/api/profile
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="example.jpg"
+Content-Type: image/jpeg
+
+[Binary content of your image file]
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+POST /api/profile HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 199
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryflwK7GEET1hwhvic
+Cookie: connect.sid=s%3ATlwVQuDvy6O6ZyhU7BJeEoAyrQ3qF4Jf.%2Baqr3KqDXnvzdYXtjUOQDVZnOhOnsM04oM0BC42cIeo
+Host: localhost:3001
+Origin: http://localhost:5173
+Pragma: no-cache
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-GPC: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+sec-ch-ua: "Brave";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+------WebKitFormBoundaryflwK7GEET1hwhvic
+Content-Disposition: form-data; name="image"; filename="example.jpg"
+Content-Type: image/jpeg
+
+[Binary content of your image file]
+------WebKitFormBoundaryflwK7GEET1hwhvic--
+
+###
+POST /api/profile HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 198
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryGjHkJDVBrdZE0PK8
+Cookie: connect.sid=s%3ATlwVQuDvy6O6ZyhU7BJeEoAyrQ3qF4Jf.%2Baqr3KqDXnvzdYXtjUOQDVZnOhOnsM04oM0BC42cIeo
+Host: localhost:3001
+Origin: http://localhost:5173
+Pragma: no-cache
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-GPC: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+sec-ch-ua: "Brave";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+###
+POST http://localhost:3001/api/profile-delete
+content-type: application/json
+
+{
+    "filePath": "uploads/image-1697105229252-520621196.jpg"
+}

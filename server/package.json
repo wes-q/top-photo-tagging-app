@@ -1,0 +1,44 @@
+{
+    "name": "top-photo-tagging-app-backend",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "start": "cross-env NODE_ENV=production node index.js",
+        "dev": "cross-env NODE_ENV=development nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "connect-mongo": "^5.0.0",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "email-validator": "^2.0.4",
+        "express": "^4.18.2",
+        "express-flash": "^0.0.2",
+        "express-handlebars": "^7.1.2",
+        "express-session": "^1.17.3",
+        "express-validator": "^7.0.1",
+        "jsonwebtoken": "^9.0.2",
+        "mailgen": "^2.0.27",
+        "mongoose": "^7.4.2",
+        "multer": "^1.4.5-lts.1",
+        "nodemailer": "^6.9.5",
+        "nodemailer-express-handlebars": "^6.1.0",
+        "passport": "^0.6.0",
+        "passport-facebook": "^3.0.0",
+        "passport-github2": "^0.1.12",
+        "passport-google-oauth20": "^2.0.0",
+        "react-router-dom": "^6.16.0"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "eslint": "^8.47.0",
+        "nodemon": "^3.0.1",
+        "winston": "^3.10.0"
+    }
+}
