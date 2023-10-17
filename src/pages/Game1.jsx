@@ -38,13 +38,18 @@ const Game1 = ({ setShowFooter }) => {
                 }));
                 // Play successful sound que
                 if (audioRefCoin.current) {
+                    audioRefCoin.current.currentTime = 0;
                     audioRefCoin.current.play();
                 }
+                // Collapse dropdown
+                setOpen(false);
             } else {
                 // shake animation and sound and red flash
                 if (audioRefHit.current) {
+                    audioRefHit.current.currentTime = 0;
                     audioRefHit.current.play();
                 }
+                setOpen(false);
             }
         }
     };
@@ -79,13 +84,7 @@ const Game1 = ({ setShowFooter }) => {
 
         const x = ((event.clientX - rect.left - dotSize / 2) / imageWidth) * 100;
         const y = ((event.clientY - rect.top - dotSize / 2) / imageHeight) * 100;
-        // console.log(`ClientX: ${event.clientX}`);
-        // console.log(`Rect.left: ${rect.left}`);
-        // console.log(`Dotsize: ${dotSize}`);
-        // console.log(`imageWidth: ${imageWidth}`);
-        // console.log(`X: ${x}`);
-        // console.log(`Y: ${y}`);
-        // console.log(`Rect.top: ${rect.top}`);
+
         setX(x);
         setY(y);
     };
@@ -114,7 +113,7 @@ const Game1 = ({ setShowFooter }) => {
                                 top: y + "%",
                             }}
                         ></div>
-                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} />}</AnimatePresence>
+                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} characterFound={characterFound} />}</AnimatePresence>
                     </>
                 )}
             </div>
@@ -172,7 +171,7 @@ const Game1 = ({ setShowFooter }) => {
 };
 
 //80.7 88.03 53.51 58.56
-function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit }) {
+function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound }) {
     // Dropdown should conditionally appear to the left or right to avoid overflow
     const menuAdjustX = x > 80 ? -dotSize * 2.5 : dotSize * 1.5;
 
@@ -191,15 +190,21 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit }) {
             ref={dropdownRef}
         >
             <div className="flex flex-col items-start">
-                <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("pichu")}>
-                    <img className="" src="/pichu.jpg" alt="pichu" />
-                </button>
-                <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("iceclimbers")}>
-                    <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
-                </button>
-                <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("mrgame")}>
-                    <img className="" src="/mrgame.jpg" alt="mr game" />
-                </button>
+                {!characterFound.character1 && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("pichu")}>
+                        <img className="" src="/pichu.jpg" alt="pichu" />
+                    </button>
+                )}
+                {!characterFound.character2 && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("iceclimbers")}>
+                        <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
+                    </button>
+                )}
+                {!characterFound.character3 && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("mrgame")}>
+                        <img className="" src="/mrgame.jpg" alt="mr game" />
+                    </button>
+                )}
             </div>
         </motion.div>
     );
