@@ -70,7 +70,7 @@ const UpdateProfile = ({ user, setNotification, setUser }) => {
         <>
             <h2 className="text-2xl mb-8 text-white text-center">Update Profile</h2>
             <div className="flex justify-around">
-                {user && <ProfilePhotoUpload user={user} profilePhoto={user.profilePhoto} setNotification={setNotification} />}
+                {user && <ProfilePhotoUpload user={user} profilePhoto={user.profilePhoto} setNotification={setNotification} setUser={setUser} />}
                 <form className="sm:w-[400px] mx-auto h-40" onSubmit={handleSubmit}>
                     <label>
                         <span className="block text-sm font-medium text-white">Email Address</span>

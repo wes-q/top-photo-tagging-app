@@ -5,7 +5,7 @@ import axios from "axios";
 import FormData from "form-data";
 import userService from "../services/users";
 
-const ProfilePhotoUpload = ({ setNotification, user, profilePhoto }) => {
+const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) => {
     const [selectedImage, setSelectedImage] = useState(null);
 
     // async function uploadImage() {
@@ -74,14 +74,21 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto }) => {
                 // console.log(userData);
                 // }
                 const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` });
-                console.log(userData);
+                // console.log(userData);
+                setUser(userData);
 
                 setNotification({ message: "Your profile picture has been updated", type: "success" });
                 setTimeout(() => {
                     setNotification(null);
                 }, 5000);
             } catch (error) {
-                console.error("Failure", error);
+                if (error.response.data.error) {
+                    const firstError = error.response.data.error;
+                    setNotification({ message: firstError, type: "error" });
+                    setTimeout(() => {
+                        setNotification(null);
+                    }, 5000);
+                }
             }
         } else {
             return;
@@ -107,12 +114,15 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto }) => {
                 //TODO Convert to .env file instead of hardcoded folder path
                 const filePath = `uploads/${filename}`;
                 console.log(`FILEPATH ${filePath}`);
-                //TODO Delete the old profile photo from the file storage
+
+                // Delete the old profile photo from the file storage
                 const response = await axios.post("/api/profile-delete", { filePath: filePath });
-                console.log(response);
+                // console.log(response);
 
                 const userData = await userService.update(user.id, { profilePhoto: null });
+                setUser(userData);
                 console.log(userData);
+
                 setNotification({ message: "Your profile picture has been removed", type: "success" });
                 setTimeout(() => {
                     setNotification(null);
