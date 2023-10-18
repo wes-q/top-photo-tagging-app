@@ -8,8 +8,9 @@ import Hamburger from "../icons/hamburger.svg?react";
 import { motion } from "framer-motion";
 import Menu from "../icons/menu.svg?react";
 import X from "../icons/x.svg?react";
+import Timer from "./Timer";
 
-export default function RootLayout({ notification, type, user, setNotification, showFooter }) {
+export default function RootLayout({ notification, type, user, setNotification, showFooter, showStartTimer, setSeconds, seconds }) {
     // const isUserLoaded = user && user.firstName && user.profilePhoto;
     const isUserLoaded = user;
     const [isExpanded, setIsExpanded] = useState(false);
@@ -26,6 +27,7 @@ export default function RootLayout({ notification, type, user, setNotification, 
                                 <span className="font-handlee text-4xl font-extrabold italic">book</span> */}
                             </div>
                         </a>
+                        {showStartTimer && <Timer className="h-auto max-h-10" setSeconds={setSeconds} seconds={seconds}></Timer>}
                         <div className="hidden sm:block">
                             <NavLink className="text-cyan-400 bg-gray-800 rounded-md px-4 py-1 font-nunito" to="/">
                                 Play

@@ -24,6 +24,8 @@ function App() {
     const [user, setUser] = useState(null);
     const [userToken, setUserToken] = useState("");
     const [showFooter, setShowFooter] = useState(true);
+    const [showStartTimer, setShowStartTimer] = useState(false);
+    const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
         const getUserOauth = async () => {
@@ -98,10 +100,10 @@ function App() {
 
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} />}>
+            <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} showStartTimer={showStartTimer} setSeconds={setSeconds} seconds={seconds} />}>
                 <Route index element={<Play />} />
                 <Route path="login" element={<Login setNotification={setNotification} setUserToken={setUserToken} />}></Route>
-                <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} />}></Route>
+                <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} />}></Route>
                 {/* <Route path="game-2" element={<Game2 />}></Route>
                 <Route path="game-3" element={<Game3 />}></Route>
                 <Route path="game-4" element={<Game4 />}></Route> */}

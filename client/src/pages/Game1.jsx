@@ -2,25 +2,45 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimCheck from "../icons/anim-check.svg?react";
 import axios from "axios";
+import ModalDeactivate from "./ModalDeactivate";
+import Modal from "./Modal";
 
-const Game1 = ({ setShowFooter }) => {
+const Game1 = ({ setShowFooter, setShowStartTimer, seconds }) => {
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
     const [open, setOpen] = useState(false);
     const [dotSize, setDotSize] = useState(0);
     const audioRefCoin = useRef(null);
     const audioRefHit = useRef(null);
+    const audioRefWin = useRef(null);
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
     const imageRef = useRef(null);
     const [characterLocations, setCharacterLocations] = useState([]);
     const [characterFound, setCharacterFound] = useState({});
 
+    const totalCharactersFound = useRef(null);
+    const totalCharacters = useRef(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Function to open the modal
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     const getCharacterLocations = async () => {
         try {
             const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
-            console.log(characterLocations.data);
+            // console.log(characterLocations.data);
             setCharacterLocations(characterLocations.data);
+            totalCharacters.current = characterLocations.data.length;
+            console.log(`totalCharacters ${totalCharacters.current}`);
         } catch (error) {
             console.log(error);
         }
@@ -30,9 +50,11 @@ const Game1 = ({ setShowFooter }) => {
         getCharacterLocations();
         // Set showFooter to false when the component mounts
         setShowFooter(false);
+        setShowStartTimer(true);
         // Return a cleanup function to set showFooter to true when the component unmounts
         return () => {
             setShowFooter(true);
+            setShowStartTimer(false);
         };
     }, []);
 
@@ -43,15 +65,21 @@ const Game1 = ({ setShowFooter }) => {
         const yMax = characterLocations[charIndex].yMax;
 
         if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
+            // Set state which displays character markers and dropdown list
             setCharacterFound((prevFound) => ({
                 ...prevFound,
                 [charIndex]: true,
             }));
+
+            // Set variable which checks if game is won
+            totalCharactersFound.current = totalCharactersFound.current + 1;
+
             // Play successful sound que
             if (audioRefCoin.current) {
                 audioRefCoin.current.currentTime = 0;
                 audioRefCoin.current.play();
             }
+
             // Collapse dropdown
             setOpen(false);
         } else {
@@ -61,6 +89,20 @@ const Game1 = ({ setShowFooter }) => {
                 audioRefHit.current.play();
             }
             setOpen(false);
+        }
+
+        // console.log(totalCharactersFound.current);
+        // console.log(totalCharacters.current);
+        console.log(characterFound);
+        if (totalCharacters.current === totalCharactersFound.current) {
+            console.log(`seconds: ${seconds}`);
+            // Stop the timer, save the time to user record
+            setShowStartTimer(false);
+            setIsModalOpen(true);
+            if (audioRefWin.current) {
+                audioRefWin.current.currentTime = 0;
+                audioRefWin.current.play();
+            }
         }
     };
 
@@ -99,6 +141,13 @@ const Game1 = ({ setShowFooter }) => {
                 <source src="/mixkit-small-hit-in-a-game-2072.wav" type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
+            <audio ref={audioRefWin}>
+                <source src="/mixkit-small-win-2020.wav" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+
+            {isModalOpen && <Modal seconds={seconds}></Modal>}
+            {/* {isModalOpen && <ModalDeactivate></ModalDeactivate>} */}
 
             <div className="relative w-fit mx-auto">
                 <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
