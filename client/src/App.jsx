@@ -103,7 +103,7 @@ function App() {
             <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} showStartTimer={showStartTimer} setSeconds={setSeconds} seconds={seconds} />}>
                 <Route index element={<Play />} />
                 <Route path="login" element={<Login setNotification={setNotification} setUserToken={setUserToken} />}></Route>
-                <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} />}></Route>
+                <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} setSeconds={setSeconds} />}></Route>
                 {/* <Route path="game-2" element={<Game2 />}></Route>
                 <Route path="game-3" element={<Game3 />}></Route>
                 <Route path="game-4" element={<Game4 />}></Route> */}

@@ -5,7 +5,7 @@ import axios from "axios";
 import ModalDeactivate from "./ModalDeactivate";
 import Modal from "./Modal";
 
-const Game1 = ({ setShowFooter, setShowStartTimer, seconds }) => {
+const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
     const [open, setOpen] = useState(false);
@@ -50,7 +50,9 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds }) => {
         getCharacterLocations();
         // Set showFooter to false when the component mounts
         setShowFooter(false);
+        setSeconds(0);
         setShowStartTimer(true);
+
         // Return a cleanup function to set showFooter to true when the component unmounts
         return () => {
             setShowFooter(true);
@@ -99,6 +101,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds }) => {
             // Stop the timer, save the time to user record
             setShowStartTimer(false);
             setIsModalOpen(true);
+
             if (audioRefWin.current) {
                 audioRefWin.current.currentTime = 0;
                 audioRefWin.current.play();
