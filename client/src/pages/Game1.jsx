@@ -102,8 +102,28 @@ const Game1 = ({ setShowFooter }) => {
 
             <div className="relative w-fit mx-auto">
                 <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
+
+                {characterLocations.map(
+                    (character, index) =>
+                        characterFound[index] && (
+                            <div
+                                key={character.id}
+                                className="absolute bg-gray-600 opacity-70 border sm:border-2 border-dashed border-white rounded-full animate-spin-slow"
+                                style={{
+                                    width: dotSize + "px",
+                                    height: dotSize + "px",
+                                    left: (character.xMin + character.xMax) / 2 + "%",
+                                    top: (character.yMin + character.yMax) / 2 + "%",
+                                }}
+                            ></div>
+                        )
+                )}
+
                 {open && (
                     <>
+                        <AnimatePresence>
+                            <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} characterFound={characterFound} characterLocations={characterLocations} />
+                        </AnimatePresence>
                         <div
                             className="absolute bg-gray-600 opacity-50 border sm:border-2 border-dashed border-white rounded-full cursor-crosshair"
                             style={{
@@ -113,7 +133,6 @@ const Game1 = ({ setShowFooter }) => {
                                 top: y + "%",
                             }}
                         ></div>
-                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} characterFound={characterFound} characterLocations={characterLocations} />}</AnimatePresence>
                     </>
                 )}
             </div>
@@ -164,7 +183,7 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound
         >
             <div className="flex flex-col items-start">
                 {characterLocations.map((character, index) => (
-                    <div>
+                    <div key={character.id}>
                         {!characterFound[index] && (
                             <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(index)}>
                                 <img src={character.imageSrc2} alt={character.charName} />
