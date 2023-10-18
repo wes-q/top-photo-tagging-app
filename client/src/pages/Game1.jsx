@@ -16,33 +16,33 @@ const Game1 = ({ setShowFooter }) => {
     const [characterLocations, setCharacterLocations] = useState([]);
     const [characterFound, setCharacterFound] = useState({});
 
+    const getCharacterLocations = async () => {
+        try {
+            const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
+            console.log(characterLocations.data);
+            setCharacterLocations(characterLocations.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
-        const getCharacterLocations = async () => {
-            try {
-                const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
-                console.log(characterLocations.data);
-                setCharacterLocations(characterLocations.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
         getCharacterLocations();
+        // Set showFooter to false when the component mounts
+        setShowFooter(false);
+        // Return a cleanup function to set showFooter to true when the component unmounts
+        return () => {
+            setShowFooter(true);
+        };
     }, []);
 
     const handleSubmit = (charIndex) => {
-        console.log(characterLocations[charIndex].charName);
-        console.log(characterLocations[charIndex].xMin);
-        console.log(characterLocations[charIndex].xMax);
-
         const xMin = characterLocations[charIndex].xMin;
         const xMax = characterLocations[charIndex].xMax;
         const yMin = characterLocations[charIndex].yMin;
         const yMax = characterLocations[charIndex].yMax;
 
-        //if x is between 650 and 692
-        //and y is between 662 and 700
         if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
-            //alert("You have found mr. Game");
             setCharacterFound((prevFound) => ({
                 ...prevFound,
                 [charIndex]: true,
@@ -55,7 +55,7 @@ const Game1 = ({ setShowFooter }) => {
             // Collapse dropdown
             setOpen(false);
         } else {
-            // shake animation and sound and red flash
+            // Shake animation and sound and red flash
             if (audioRefHit.current) {
                 audioRefHit.current.currentTime = 0;
                 audioRefHit.current.play();
@@ -63,16 +63,6 @@ const Game1 = ({ setShowFooter }) => {
             setOpen(false);
         }
     };
-
-    useEffect(() => {
-        // Set showFooter to false when the component mounts
-        setShowFooter(false);
-
-        // Return a cleanup function to set showFooter to true when the component unmounts
-        return () => {
-            setShowFooter(true);
-        };
-    }, []);
 
     const handleClickOutside = (event) => {
         if (open && dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
@@ -123,57 +113,30 @@ const Game1 = ({ setShowFooter }) => {
                                 top: y + "%",
                             }}
                         ></div>
-                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} characterFound={characterFound} />}</AnimatePresence>
+                        <AnimatePresence>{open && <DropdownMenu x={x} y={y} dotSize={dotSize} setOpen={setOpen} handleClickOutside={handleClickOutside} dropdownRef={dropdownRef} handleSubmit={handleSubmit} characterFound={characterFound} characterLocations={characterLocations} />}</AnimatePresence>
                     </>
                 )}
             </div>
+
             <div className="fixed h-20 w-full bottom-0 bg-gray-800 p-4 text-xs">
                 <div className="flex items-center justify-center">
-                    <div className="flex gap-1 items-center w-full transition-colors">
-                        <img className="h-auto max-h-12 w-10 select-none" src="/mrgame-vector.png" alt="mr game" />
-                        <div className="flex flex-col justify-start w-20 items-start text-left">
-                            <div>
-                                {characterFound[0] ? (
-                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
-                                        <AnimCheck className="w-5 h-5" />
-                                    </motion.div>
-                                ) : (
-                                    <div className="w-5 h-5"></div>
-                                )}
+                    {characterLocations.map((character, index) => (
+                        <div className="flex gap-1 items-center w-full transition-colors" key={character.id}>
+                            <img className="h-auto max-h-12 w-10 select-none" src={character.imageSrc} alt={character.charName} />
+                            <div className="flex flex-col justify-start w-20 items-start text-left">
+                                <div>
+                                    {characterFound[index] ? (
+                                        <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
+                                            <AnimCheck className="w-5 h-5" />
+                                        </motion.div>
+                                    ) : (
+                                        <div className="w-5 h-5"></div>
+                                    )}
+                                </div>
+                                <span>{character.charName}</span>
                             </div>
-                            <span>Mr. Game</span>
                         </div>
-                    </div>
-                    <div className="flex gap-1 items-center w-full transition-colors">
-                        <img className="h-auto max-h-12 w-10" src="/ice-climbers-vector.png" alt="ice climbers" />
-                        <div className="flex flex-col justify-start w-20 items-start text-left">
-                            <div>
-                                {characterFound[1] ? (
-                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
-                                        <AnimCheck className="w-5 h-5" />
-                                    </motion.div>
-                                ) : (
-                                    <div className="w-5 h-5"></div>
-                                )}
-                            </div>
-                            <span>Ice Climbers</span>
-                        </div>
-                    </div>
-                    <div className="flex gap-1 items-center w-full transition-colors">
-                        <img className="h-auto max-h-12 w-10" src="/pichu-vector.png" alt="pichu" />
-                        <div className="flex flex-col justify-start w-20 items-start text-left">
-                            <div>
-                                {characterFound[2] ? (
-                                    <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
-                                        <AnimCheck className="w-5 h-5" />
-                                    </motion.div>
-                                ) : (
-                                    <div className="w-5 h-5"></div>
-                                )}
-                            </div>
-                            <span>Pichu</span>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </>
@@ -181,7 +144,7 @@ const Game1 = ({ setShowFooter }) => {
 };
 
 //80.7 88.03 53.51 58.56
-function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound }) {
+function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound, characterLocations }) {
     // Dropdown should conditionally appear to the left or right to avoid overflow
     const menuAdjustX = x > 80 ? -dotSize * 2.5 : dotSize * 1.5;
 
@@ -200,21 +163,15 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound
             ref={dropdownRef}
         >
             <div className="flex flex-col items-start">
-                {!characterFound[0] && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(0)}>
-                        <img className="" src="/mrgame.jpg" alt="mr game" />
-                    </button>
-                )}
-                {!characterFound[1] && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(1)}>
-                        <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
-                    </button>
-                )}
-                {!characterFound[2] && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(2)}>
-                        <img className="" src="/pichu.jpg" alt="pichu" />
-                    </button>
-                )}
+                {characterLocations.map((character, index) => (
+                    <div>
+                        {!characterFound[index] && (
+                            <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(index)}>
+                                <img src={character.imageSrc2} alt={character.charName} />
+                            </button>
+                        )}
+                    </div>
+                ))}
             </div>
         </motion.div>
     );

@@ -45,7 +45,7 @@ function App() {
                         setNotification(null);
                     }, 7000);
                 } else {
-                    setNotification({ message: "Hello! Login to gain complete access", type: "info" });
+                    // setNotification({ message: "Hello! Login to gain complete access", type: "info" });
                 }
             }
         };
@@ -77,10 +77,11 @@ function App() {
                         setNotification(null);
                     }, 10000);
                 } catch (error) {
-                    setNotification({ message: "Login to gain complete access", type: "info" });
-                    setTimeout(() => {
-                        setNotification(null);
-                    }, 10000);
+                    console.log("Automatic relogin: No user session found.");
+                    // setNotification({ message: "Login to gain complete access", type: "info" });
+                    // setTimeout(() => {
+                    //     setNotification(null);
+                    // }, 10000);
                     // next(error);
                 }
             }

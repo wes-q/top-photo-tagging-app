@@ -65,11 +65,11 @@ content-type: application/json
 
 {
     "puzzle": "puzzle1",
-    "charName": "pichu",
-    "xMin": 74.82,
-    "xMax": 82.3,
-    "yMin": 44.41,
-    "yMax": 48.55
+    "charName": "Ice Climbers",
+    "xMin": -3,
+    "xMax": 4,
+    "yMin": 73.2,
+    "yMax": 84.24
 }
 
 ###
