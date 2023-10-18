@@ -54,20 +54,22 @@ sec-ch-ua-mobile: ?0
 sec-ch-ua-platform: "Windows"
 
 ###
-GET http://localhost:3001/api/anecdotes/
+GET http://localhost:3001/api/characterLocations/
 
 ###
-GET http://localhost:3001/api/users/
+GET http://localhost:3001/api/characterLocations/
 
 ###
-POST http://localhost:3001/api/anecdotes/
+POST http://localhost:3001/api/characterLocations/
 content-type: application/json
 
 {
-    "content": "If it hurts, do it more often",
-    "author": "Jez Humble",
-    "info": "https://martinfowler.com/bliki/FrequencyReducesDifficulty.html",
-    "votes": 21
+    "puzzle": "puzzle1",
+    "charName": "pichu",
+    "xMin": 74.82,
+    "xMax": 82.3,
+    "yMin": 44.41,
+    "yMax": 48.55
 }
 
 ###

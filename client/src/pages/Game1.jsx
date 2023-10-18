@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimCheck from "../icons/anim-check.svg?react";
+import axios from "axios";
 
 const Game1 = ({ setShowFooter }) => {
     const [x, setX] = useState(0);
@@ -12,45 +13,54 @@ const Game1 = ({ setShowFooter }) => {
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
     const imageRef = useRef(null);
-    const [characterFound, setCharacterFound] = useState({
-        character1: false,
-        character2: false,
-        character3: false,
-    });
+    const [characterLocations, setCharacterLocations] = useState([]);
+    const [characterFound, setCharacterFound] = useState({});
 
-    // Function to toggle the found state of a character
-    const toggleCharacterFound = (characterName) => {
-        setCharacterFound((prevFound) => ({
-            ...prevFound,
-            [characterName]: !prevFound[characterName],
-        }));
-    };
-
-    const handleSubmit = (character) => {
-        if (character === "mrgame") {
-            //if x is between 650 and 692
-            //and y is between 662 and 700
-            if (x >= 80.7 && x <= 88.03 && y >= 53.51 && y <= 58.56) {
-                //alert("You have found mr. Game");
-                setCharacterFound((prevFound) => ({
-                    ...prevFound,
-                    character3: true,
-                }));
-                // Play successful sound que
-                if (audioRefCoin.current) {
-                    audioRefCoin.current.currentTime = 0;
-                    audioRefCoin.current.play();
-                }
-                // Collapse dropdown
-                setOpen(false);
-            } else {
-                // shake animation and sound and red flash
-                if (audioRefHit.current) {
-                    audioRefHit.current.currentTime = 0;
-                    audioRefHit.current.play();
-                }
-                setOpen(false);
+    useEffect(() => {
+        const getCharacterLocations = async () => {
+            try {
+                const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
+                console.log(characterLocations.data);
+                setCharacterLocations(characterLocations.data);
+            } catch (error) {
+                console.log(error);
             }
+        };
+        getCharacterLocations();
+    }, []);
+
+    const handleSubmit = (charIndex) => {
+        console.log(characterLocations[charIndex].charName);
+        console.log(characterLocations[charIndex].xMin);
+        console.log(characterLocations[charIndex].xMax);
+
+        const xMin = characterLocations[charIndex].xMin;
+        const xMax = characterLocations[charIndex].xMax;
+        const yMin = characterLocations[charIndex].yMin;
+        const yMax = characterLocations[charIndex].yMax;
+
+        //if x is between 650 and 692
+        //and y is between 662 and 700
+        if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
+            //alert("You have found mr. Game");
+            setCharacterFound((prevFound) => ({
+                ...prevFound,
+                [charIndex]: true,
+            }));
+            // Play successful sound que
+            if (audioRefCoin.current) {
+                audioRefCoin.current.currentTime = 0;
+                audioRefCoin.current.play();
+            }
+            // Collapse dropdown
+            setOpen(false);
+        } else {
+            // shake animation and sound and red flash
+            if (audioRefHit.current) {
+                audioRefHit.current.currentTime = 0;
+                audioRefHit.current.play();
+            }
+            setOpen(false);
         }
     };
 
@@ -120,10 +130,10 @@ const Game1 = ({ setShowFooter }) => {
             <div className="fixed h-20 w-full bottom-0 bg-gray-800 p-4 text-xs">
                 <div className="flex items-center justify-center">
                     <div className="flex gap-1 items-center w-full transition-colors">
-                        <img className="h-auto max-h-12 w-10" src="/pichu-vector.png" alt="pichu" />
+                        <img className="h-auto max-h-12 w-10 select-none" src="/mrgame-vector.png" alt="mr game" />
                         <div className="flex flex-col justify-start w-20 items-start text-left">
                             <div>
-                                {characterFound.character1 ? (
+                                {characterFound[0] ? (
                                     <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
                                         <AnimCheck className="w-5 h-5" />
                                     </motion.div>
@@ -131,14 +141,14 @@ const Game1 = ({ setShowFooter }) => {
                                     <div className="w-5 h-5"></div>
                                 )}
                             </div>
-                            <span>Pichu</span>
+                            <span>Mr. Game</span>
                         </div>
                     </div>
                     <div className="flex gap-1 items-center w-full transition-colors">
                         <img className="h-auto max-h-12 w-10" src="/ice-climbers-vector.png" alt="ice climbers" />
                         <div className="flex flex-col justify-start w-20 items-start text-left">
                             <div>
-                                {characterFound.character2 ? (
+                                {characterFound[1] ? (
                                     <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
                                         <AnimCheck className="w-5 h-5" />
                                     </motion.div>
@@ -150,10 +160,10 @@ const Game1 = ({ setShowFooter }) => {
                         </div>
                     </div>
                     <div className="flex gap-1 items-center w-full transition-colors">
-                        <img className="h-auto max-h-12 w-10 select-none" src="/mrgame-vector.png" alt="mr game" />
+                        <img className="h-auto max-h-12 w-10" src="/pichu-vector.png" alt="pichu" />
                         <div className="flex flex-col justify-start w-20 items-start text-left">
                             <div>
-                                {characterFound.character3 ? (
+                                {characterFound[2] ? (
                                     <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
                                         <AnimCheck className="w-5 h-5" />
                                     </motion.div>
@@ -161,7 +171,7 @@ const Game1 = ({ setShowFooter }) => {
                                     <div className="w-5 h-5"></div>
                                 )}
                             </div>
-                            <span className=" select-none">Mr. Game</span>
+                            <span>Pichu</span>
                         </div>
                     </div>
                 </div>
@@ -190,19 +200,19 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound
             ref={dropdownRef}
         >
             <div className="flex flex-col items-start">
-                {!characterFound.character1 && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("pichu")}>
-                        <img className="" src="/pichu.jpg" alt="pichu" />
+                {!characterFound[0] && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(0)}>
+                        <img className="" src="/mrgame.jpg" alt="mr game" />
                     </button>
                 )}
-                {!characterFound.character2 && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("iceclimbers")}>
+                {!characterFound[1] && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(1)}>
                         <img className="" src="/iceclimbers.jpg" alt="ice climbers" />
                     </button>
                 )}
-                {!characterFound.character3 && (
-                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit("mrgame")}>
-                        <img className="" src="/mrgame.jpg" alt="mr game" />
+                {!characterFound[2] && (
+                    <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(2)}>
+                        <img className="" src="/pichu.jpg" alt="pichu" />
                     </button>
                 )}
             </div>

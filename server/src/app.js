@@ -11,6 +11,7 @@ const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const authRouter = require("./controllers/auth");
 const emailRouter = require("./controllers/email");
+const characterLocationsRouter = require("./controllers/characterLocations");
 
 const middleware = require("./utils/middleware");
 const winstonLogger = require("./utils/winstonLogger");
@@ -84,6 +85,7 @@ app.use("/", anecdotesRouter);
 app.use("/", usersRouter);
 app.use("/", loginRouter);
 app.use("/", emailRouter);
+app.use("/", characterLocationsRouter);
 
 app.use(middleware.errorHandler);
 
