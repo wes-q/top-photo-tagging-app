@@ -60,7 +60,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
         };
     }, []);
 
-    const handleSubmit = (charIndex) => {
+    const handleSubmit = async (charIndex) => {
         const xMin = characterLocations[charIndex].xMin;
         const xMax = characterLocations[charIndex].xMax;
         const yMin = characterLocations[charIndex].yMin;
@@ -97,7 +97,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
         // console.log(totalCharacters.current);
         console.log(characterFound);
         if (totalCharacters.current === totalCharactersFound.current) {
-            console.log(`seconds: ${seconds}`);
+            // console.log(`seconds: ${seconds}`);
             // Stop the timer, save the time to user record
             setShowStartTimer(false);
             setIsModalOpen(true);
@@ -105,6 +105,28 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
             if (audioRefWin.current) {
                 audioRefWin.current.currentTime = 0;
                 audioRefWin.current.play();
+            }
+
+            // Save score to database
+            const endpoint = "http://localhost:3001/api/scores/";
+
+            const newScore = {
+                puzzle: "puzzle1", //TODO remove hardcoded game
+                seconds: seconds,
+            };
+
+            const loggedUserToken = window.localStorage.getItem("loggedUserToken");
+            const headerConfig = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${loggedUserToken}`,
+                },
+            };
+
+            try {
+                await axios.post(endpoint, newScore, headerConfig);
+            } catch (error) {
+                console.log(error);
             }
         }
     };
@@ -150,11 +172,11 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
             </audio>
 
             {isModalOpen && <Modal seconds={seconds}></Modal>}
-            {/* {isModalOpen && <ModalDeactivate></ModalDeactivate>} */}
 
             <div className="relative w-fit mx-auto">
                 <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
 
+                {/* Markers for found characters */}
                 {characterLocations.map(
                     (character, index) =>
                         characterFound[index] && (
@@ -171,6 +193,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
                         )
                 )}
 
+                {/* Circle pointer selector */}
                 {open && (
                     <>
                         <AnimatePresence>
@@ -189,6 +212,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
                 )}
             </div>
 
+            {/* Characters to find (bottom bar) */}
             <div className="fixed h-20 w-full bottom-0 bg-gray-800 p-4 text-xs">
                 <div className="flex items-center justify-center">
                     {characterLocations.map((character, index) => (
@@ -214,9 +238,8 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
     );
 };
 
-//80.7 88.03 53.51 58.56
 function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound, characterLocations }) {
-    // Dropdown should conditionally appear to the left or right to avoid overflow
+    // Dropdown conditionally appears to the left or right to avoid overflow
     const menuAdjustX = x > 80 ? -dotSize * 2.5 : dotSize * 1.5;
 
     return (
