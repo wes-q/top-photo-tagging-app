@@ -13,6 +13,7 @@ import GameList from "./pages/GameList";
 // import Game2 from "./pages/Game2";
 // import Game3 from "./pages/Game3";
 // import Game4 from "./pages/Game4";
+import Leaderboard from "./pages/Leaderboard";
 
 import loginService from "./services/login";
 import axios from "axios";
@@ -114,6 +115,7 @@ function App() {
                 {/* <Route path="game-2" element={<Game2 />}></Route>
                 <Route path="game-3" element={<Game3 />}></Route>
                 <Route path="game-4" element={<Game4 />}></Route> */}
+                <Route path="leaderboard" element={<Leaderboard />}></Route>
                 <Route path="about" element={<About />}></Route>
                 <Route path="signup" element={<SignupForm setNotification={setNotification} />}></Route>
                 <Route path="verification-successful" element={<VerificationSuccessful />}></Route>

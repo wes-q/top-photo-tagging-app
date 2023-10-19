@@ -21,7 +21,7 @@ Accept: application/json, text/plain, */*
 Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
-Cookie: connect.sid=s%3A1AdIg8UFMT8RnItUBBpkYFRrb71ltCE5.KydNuBbu2NiQFZjInAZvAgbQUZW%2B8wiZALTW%2FWvxHlo
+Cookie: connect.sid=s%3ASmnggXqGnjnor9BLKbQA0ywa3swQht_-.CXfWJnNKOD6fVoCnJILETDWy7igOP2KqBPK7uDw5B%2Fo
 Host: localhost:3001
 Origin: http://localhost:5173
 Referer: http://localhost:5173/
@@ -87,10 +87,10 @@ POST http://localhost:3001/api/users
 content-type: application/json
 
 {
-    "displayName": "s ",
+    "displayName": "Vincenzo ",
     "password": "12345678",
-    "email": "piuskjhg@gmail.com",
-    "source": "lsocal",
+    "email": "vincent@gmail.com",
+    "source": "local",
     "isVerified": true
 }
 
@@ -134,9 +134,19 @@ POST http://localhost:3001/api/login-local/
 content-type: application/json
 
 {
-    "email": "sonic@gmail.com",
+    "email": "vincent@gmail.com",
     "password": "12345678"
 }
+
+###
+POST http://localhost:3001/api/login-local/
+content-type: application/json
+
+{
+    "email": "vincent@gmail.com",
+    "password": "12345678"
+}
+
 
 ###
 GET http://localhost:3001/api/send-verification-email

@@ -144,9 +144,9 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
             <details className="relative">
                 <summary className="list-none" aria-haspopup="menu" role="button">
                     {/* <img className="rounded-full overflow-hidden inline-block border-none w-52 h-52 object-cover" src={selectedImage ? selectedImage : noProfilePhoto} alt="@iamwesofph" /> */}
-                    <img className="rounded-full overflow-hidden inline-block border-none w-52 h-52 object-cover" src={selectedImage || noProfilePhoto} alt="@iamwesofph" />
+                    <img className="rounded-full overflow-hidden inline-block border-none w-28 h-28 sm:w-52 sm:h-52 object-cover" src={selectedImage || noProfilePhoto} alt="@iamwesofph" />
 
-                    <div className="relative w-16 left-0 bottom-10 bg-gray-800 rounded-md fill-current text-sm px-2 py-1 mb-2 border border-gray-500">
+                    <div className="relative w-16 left-20 bottom-10 bg-gray-800 rounded-md fill-current text-sm px-2 py-1 mb-2 border border-gray-500">
                         <div className="flex justify-around items-center">
                             <EditPen />
                             <span className="select-none">Edit</span>
@@ -154,7 +154,7 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                     </div>
                 </summary>
 
-                <div className="rounded-md absolute bottom-10 translate-y-full" role="menu">
+                <div className="rounded-md absolute bottom-10 sm:bottom-72 translate-y-full" role="menu">
                     <div className="rounded-md flex flex-col items-start border border-gray-500 bg-gray-800 overflow-hidden">
                         <form encType="multipart/form-data" className="flex">
                             <label htmlFor="upload_photo" className="select-none whitespace-nowrap text-sm cursor-pointer w-full text-left px-4 py-2 hover:bg-cyan-400 hover:text-slate-700" tabIndex="1">

@@ -69,7 +69,7 @@ const UpdateProfile = ({ user, setNotification, setUser }) => {
     return (
         <div className="p-6">
             <h2 className="text-2xl mb-8 text-white text-center">Update Profile</h2>
-            <div className="flex justify-evenly">
+            <div className="flex flex-col sm:flex-row justify-evenly">
                 {user && <ProfilePhotoUpload user={user} profilePhoto={user.profilePhoto} setNotification={setNotification} setUser={setUser} />}
                 <form className="sm:w-[400px] h-auto" onSubmit={handleSubmit}>
                     <label>
