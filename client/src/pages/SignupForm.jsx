@@ -84,13 +84,13 @@ const SignupForm = ({ setNotification }) => {
                 </label>
 
                 {isDisabled ? (
-                    <button disabled className="flex items-center bg-cyan-400 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded focus:outline-none mr-2" type="submit">
+                    <button disabled className="flex items-center bg-cyan-400 hover:bg-cyan-500 text-white py-2 px-4 rounded focus:outline-none mr-2" type="submit">
                         <Spinner />
                         Redirecting...
                     </button>
                 ) : (
                     <div className="flex justify-end">
-                        <button className="bg-cyan-400 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded focus:outline-none mt-4" type="submit">
+                        <button className="bg-cyan-400 hover:bg-cyan-500 text-white py-2 px-4 rounded focus:outline-none mt-4" type="submit">
                             Sign Up
                         </button>
                     </div>

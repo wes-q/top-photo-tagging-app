@@ -47,6 +47,8 @@ function App() {
                         setNotification(null);
                     }, 7000);
                 } else {
+                    console.log("Automatic relogin: No user session found.");
+
                     // setNotification({ message: "Hello! Login to gain complete access", type: "info" });
                 }
             }
@@ -80,10 +82,15 @@ function App() {
                     }, 10000);
                 } catch (error) {
                     console.log("Automatic relogin: No user session found.");
-                    // setNotification({ message: "Login to gain complete access", type: "info" });
-                    // setTimeout(() => {
-                    //     setNotification(null);
-                    // }, 10000);
+                    // Make sure backed always responds with jwt expired for expired tokens
+                    if (error.response.data.error === "jwt expired") {
+                        // Handle the removal of the expired token in the browsers local storage
+                        window.localStorage.removeItem("loggedUserToken");
+                        setNotification({ message: "Session expired for security purposes, please login again.", type: "warning" });
+                        setTimeout(() => {
+                            setNotification(null);
+                        }, 10000);
+                    }
                     // next(error);
                 }
             }

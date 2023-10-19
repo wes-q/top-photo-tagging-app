@@ -24,7 +24,7 @@ const VerificationSuccessful = () => {
     }, []);
 
     return (
-        <div className="flex flex-col h-full items-center justify-center">
+        <div className="flex flex-col h-full items-center justify-center p-6">
             <div className="text-4xl font-bold mb-4">Verification successful!</div>
             <span>Redirecting you to the login page... </span>
             <span>

@@ -75,6 +75,7 @@ const userExtractor = async (request, response, next) => {
         next(); // Continue to the next middleware or route handler
     } catch (error) {
         // return response.status(401).json({ error: "token invalid catch" });
+        console.log("EXPIRRREEEE!");
         next(error);
     }
 };

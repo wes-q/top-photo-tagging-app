@@ -67,11 +67,11 @@ const UpdateProfile = ({ user, setNotification, setUser }) => {
     };
 
     return (
-        <>
+        <div className="p-6">
             <h2 className="text-2xl mb-8 text-white text-center">Update Profile</h2>
-            <div className="flex justify-around">
+            <div className="flex justify-evenly">
                 {user && <ProfilePhotoUpload user={user} profilePhoto={user.profilePhoto} setNotification={setNotification} setUser={setUser} />}
-                <form className="sm:w-[400px] mx-auto h-40" onSubmit={handleSubmit}>
+                <form className="sm:w-[400px] h-auto" onSubmit={handleSubmit}>
                     <label>
                         <span className="block text-sm font-medium text-white">Email Address</span>
                         <input type="text" name="email" value={formData.email || ""} onChange={handleChange} className="mt-1 mb-2 px-3 py-2 bg-white text-black border-2 shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1  valid:border-green-400 disabled:bg-gray-300 disabled:text-gray-500 disabled:border-gray-300 " placeholder="john@example.com" required disabled />
@@ -134,7 +134,7 @@ const UpdateProfile = ({ user, setNotification, setUser }) => {
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 };
 

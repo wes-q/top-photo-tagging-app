@@ -13,7 +13,7 @@ const Modal = ({ seconds }) => {
                     <div>Total characters found </div>
                     <Link className="flex gap-1 items-center justify-center rounded-lg bg-primary text-dark-background px-4 hover:shadow-primary hover:translate-y-[-3px] transition ease-in-out duration-300 active:scale-95 select-none" to="/">
                         <ControllerIcon />
-                        <span>New Game</span>
+                        <span className="whitespace-nowrap">New Game</span>
                     </Link>
                 </div>
             </div>

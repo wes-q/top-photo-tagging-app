@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const loginRouter = require("express").Router();
 const User = require("../models/user");
 const middleware = require("../utils/middleware");
+const jwtExpiration = process.env.JWT_EXPIRATION || "1h"; // Default to 1 hour
 
 // // This route validates the giver password and email, sends the browser the JWT
 // loginRouter.post("/api/login-local", async (request, response, next) => {
@@ -44,7 +45,8 @@ loginRouter.post("/api/login-local", async (request, response, next) => {
             if (passwordCorrect) {
                 console.log("Password is valid");
                 const userForToken = { id: user._id };
-                const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 });
+                // const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 });
+                const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: jwtExpiration });
                 response.status(200).send(token);
             } else {
                 return response.status(401).json({ error: "Invalid email or password" });

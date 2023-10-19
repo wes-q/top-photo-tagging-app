@@ -29,7 +29,7 @@ const Notification = ({ notification, setNotification }) => {
     const colorClass = typeToColorClass[notification.type] || "text-gray-400";
 
     return (
-        <div>
+        <div className="p-6">
             <div className={`flex justify-between items-center w-full px-4 py-2 text-justify rounded-md bg-gray-800 border-black border ${colorClass} mb-4 whitespace-pre-line`}>
                 <div>{notification.message}</div>
                 <button className="font-bold text-xl pl-4" onClick={() => setNotification(null)}>
