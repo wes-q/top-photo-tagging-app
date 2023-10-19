@@ -2,10 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimCheck from "../icons/anim-check.svg?react";
 import axios from "axios";
-import ModalDeactivate from "./ModalDeactivate";
 import Modal from "./Modal";
 
-const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
+const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) => {
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
     const [open, setOpen] = useState(false);
@@ -174,7 +173,7 @@ const Game1 = ({ setShowFooter, setShowStartTimer, seconds, setSeconds }) => {
             {isModalOpen && <Modal seconds={seconds}></Modal>}
 
             <div className="relative w-fit mx-auto">
-                <img className="cursor-crosshair" src="/puzzle1.jpg" alt="" onClick={handleClick} ref={imageRef} />
+                <img className="cursor-crosshair" src={game.imageSrc} alt="" onClick={handleClick} ref={imageRef} />
 
                 {/* Markers for found characters */}
                 {characterLocations.map(
@@ -271,4 +270,4 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound
     );
 }
 
-export default Game1;
+export default Game;

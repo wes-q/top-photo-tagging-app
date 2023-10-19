@@ -8,7 +8,7 @@ import VerificationSuccessful from "./pages/VerificationSuccessful";
 import VerificationNothing from "./pages/VerificationNothing";
 import UpdateProfile from "./pages/UpdateProfile";
 import About from "./pages/About";
-import Game1 from "./pages/Game1";
+import Game from "./pages/Game";
 import GameList from "./pages/GameList";
 // import Game2 from "./pages/Game2";
 // import Game3 from "./pages/Game3";
@@ -20,6 +20,29 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
+const gamesData = [
+    {
+        id: 1,
+        name: "Smash Bros 1",
+        imageSrc: "/puzzle1.jpg",
+    },
+    {
+        id: 2,
+        name: "Smash Bros 2",
+        imageSrc: "/puzzle2.jpg",
+    },
+    {
+        id: 3,
+        name: "Super Mario",
+        imageSrc: "/puzzle3.webp",
+    },
+    {
+        id: 4,
+        name: "Anomaly World",
+        imageSrc: "/puzzle4.jpg",
+    },
+];
+
 function App() {
     const [notification, setNotification] = useState(null);
     const [user, setUser] = useState(null);
@@ -27,6 +50,7 @@ function App() {
     const [showFooter, setShowFooter] = useState(true);
     const [showStartTimer, setShowStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
+    const [game, setGame] = useState("");
 
     useEffect(() => {
         const getUserOauth = async () => {
@@ -109,12 +133,9 @@ function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} showStartTimer={showStartTimer} setSeconds={setSeconds} seconds={seconds} />}>
-                <Route index element={<GameList />} />
+                <Route index element={<GameList gamesData={gamesData} setGame={setGame} />} />
                 <Route path="login" element={<Login setNotification={setNotification} setUserToken={setUserToken} />}></Route>
-                <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} setSeconds={setSeconds} />}></Route>
-                {/* <Route path="game-2" element={<Game2 />}></Route>
-                <Route path="game-3" element={<Game3 />}></Route>
-                <Route path="game-4" element={<Game4 />}></Route> */}
+                <Route path="game" element={<Game game={game} setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} setSeconds={setSeconds} />}></Route>
                 <Route path="leaderboard" element={<Leaderboard />}></Route>
                 <Route path="about" element={<About />}></Route>
                 <Route path="signup" element={<SignupForm setNotification={setNotification} />}></Route>

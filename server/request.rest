@@ -64,22 +64,22 @@ POST http://localhost:3001/api/characterLocations/
 content-type: application/json
 
 {
-    "puzzle": "puzzle1",
-    "charName": "Ice Climbers",
-    "xMin": -3,
-    "xMax": 4,
-    "yMin": 73.2,
-    "yMax": 84.24
+    "puzzle": "puzzle4",
+    "charName": "Kamaji",
+    "xMin": 55.6,
+    "xMax": 66.63,
+    "yMin": 27.20,
+    "yMax": 29.22
 }
 
 ###
 POST http://localhost:3001/api/scores/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzA5MWJjMzg5YjU1YjFmMGIzMmNmNCIsImlhdCI6MTY5NzY5Nzc2MCwiZXhwIjoxNjk3NzAxMzYwfQ.xau3ChwLW0ASXRpqxoz6KBLAgIuUgdzx0O1q8RobGOo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzBlZDIzODg2ZDMzMzI0NjcyN2QwNSIsImlhdCI6MTY5NzcwNTQ3MywiZXhwIjoxNjk3NzA5MDczfQ.ZEMCxKrc9KyzW8OtkjXzIKrWTlwuP3-Buq_Ycnb42mY
 
 {
     "puzzle": "puzzle1",
-    "seconds": 100
+    "seconds": 421
 }
 
 ###
@@ -124,7 +124,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ0Y2ViZ
 }
 ###
 GET http://localhost:3001/api/login-local/success
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjRjN2UxMzZmYTVjOTBjMzQ4YzAxOSIsImlhdCI6MTY5NzA3OTAwOCwiZXhwIjoxNjk3MDgyNjA4fQ.RDmo00uG5jOIP2v2_LpNExX6yhjJh8z-b72tWlnABFo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzBlZDhiODg2ZDMzMzI0NjcyN2QwZCIsImlhdCI6MTY5NzcwNTQxMCwiZXhwIjoxNjk3NzA5MDEwfQ.SvSQGgRbC9WStVDFFv_PBIP9GM9ONhAsL3jRKHvFEYE
 
 ###
 GET http://localhost:3001/api/verify-email/?token=$2b$10$bGdf1GZ6JfSZrFyRVceWueHYE7qHYAfjsGezPkQuU/I.OFEBdNbf6
@@ -143,7 +143,7 @@ POST http://localhost:3001/api/login-local/
 content-type: application/json
 
 {
-    "email": "vincent@gmail.com",
+    "email": "jace@gmail.com",
     "password": "12345678"
 }
 
