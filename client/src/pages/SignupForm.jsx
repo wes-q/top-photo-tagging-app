@@ -51,7 +51,7 @@ const SignupForm = ({ setNotification }) => {
     };
 
     return (
-        <>
+        <div className="p-6">
             <h2 className="text-2xl mb-8 text-white text-center">Signup Form</h2>
             <form className="sm:w-[400px] mx-auto" onSubmit={handleSubmit}>
                 <label>
@@ -96,7 +96,7 @@ const SignupForm = ({ setNotification }) => {
                     </div>
                 )}
             </form>
-        </>
+        </div>
     );
 };
 

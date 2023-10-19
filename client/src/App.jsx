@@ -8,8 +8,8 @@ import VerificationSuccessful from "./pages/VerificationSuccessful";
 import VerificationNothing from "./pages/VerificationNothing";
 import UpdateProfile from "./pages/UpdateProfile";
 import About from "./pages/About";
-import Play from "./pages/Play";
 import Game1 from "./pages/Game1";
+import GameList from "./pages/GameList";
 // import Game2 from "./pages/Game2";
 // import Game3 from "./pages/Game3";
 // import Game4 from "./pages/Game4";
@@ -101,7 +101,7 @@ function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} showStartTimer={showStartTimer} setSeconds={setSeconds} seconds={seconds} />}>
-                <Route index element={<Play />} />
+                <Route index element={<GameList />} />
                 <Route path="login" element={<Login setNotification={setNotification} setUserToken={setUserToken} />}></Route>
                 <Route path="game-1" element={<Game1 setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} setSeconds={setSeconds} />}></Route>
                 {/* <Route path="game-2" element={<Game2 />}></Route>
