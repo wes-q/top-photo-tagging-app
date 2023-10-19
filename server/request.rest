@@ -57,7 +57,7 @@ sec-ch-ua-platform: "Windows"
 GET http://localhost:3001/api/characterLocations/
 
 ###
-GET http://localhost:3001/api/characterLocations/
+GET http://localhost:3001/api/scores/
 
 ###
 POST http://localhost:3001/api/characterLocations/
@@ -70,6 +70,16 @@ content-type: application/json
     "xMax": 4,
     "yMin": 73.2,
     "yMax": 84.24
+}
+
+###
+POST http://localhost:3001/api/scores/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzA5MWJjMzg5YjU1YjFmMGIzMmNmNCIsImlhdCI6MTY5NzY5Nzc2MCwiZXhwIjoxNjk3NzAxMzYwfQ.xau3ChwLW0ASXRpqxoz6KBLAgIuUgdzx0O1q8RobGOo
+
+{
+    "puzzle": "puzzle1",
+    "seconds": 100
 }
 
 ###
@@ -124,8 +134,8 @@ POST http://localhost:3001/api/login-local/
 content-type: application/json
 
 {
-    "email": "anoyorenelyn@gmail.com",
-    "password": "11111111"
+    "email": "sonic@gmail.com",
+    "password": "12345678"
 }
 
 ###
