@@ -7,6 +7,8 @@ const User = require("../models/user");
 const config = require("../utils/config");
 
 const router = express.Router();
+const jwt = require("jsonwebtoken");
+const jwtExpiration = process.env.JWT_EXPIRATION || "1h"; // Default to 1 hour
 
 passport.use(
     new FacebookStrategy(
@@ -183,20 +185,20 @@ passport.deserializeUser((user, done) => {
     done(null, user);
 });
 
-// This is not official
-router.get("/auth/login/success", async (req, res) => {
-    // req.user comes from the sessionDB, created by serializeUser
-    if (req.user) {
-        try {
-            const loggedUser = await User.findOne({ _id: req.user.id });
-            res.status(200).json(loggedUser);
-        } catch (error) {
-            res.status(400).json({ error: true, message: req.session.messages });
-        }
-    } else if (!req.user) {
-        res.status(401).json({ error: true, message: req.session.messages });
-    }
-});
+// // This is not official
+// router.get("/auth/login/success", async (req, res) => {
+//     // req.user comes from the sessionDB, created by serializeUser
+//     if (req.user) {
+//         try {
+//             const loggedUser = await User.findOne({ _id: req.user.id });
+//             res.status(200).json(loggedUser);
+//         } catch (error) {
+//             res.status(400).json({ error: true, message: req.session.messages });
+//         }
+//     } else if (!req.user) {
+//         res.status(401).json({ error: true, message: req.session.messages });
+//     }
+// });
 
 router.get(
     "/auth/google",
@@ -209,22 +211,33 @@ router.get(
     "/auth/google/callback",
     passport.authenticate("google", {
         failureRedirect: `${config.FRONTEND_URL}/login`,
-        successRedirect: config.FRONTEND_URL,
+        successRedirect: `${config.FRONTEND_URL}/getjwt`,
         failureMessage: true, // Capture failure message
-    }),
-    (req, res) => {
-        // Assuming user data is available in req.user after successful authentication
-        const userData = req.user;
+    })
+    // ,
+    // (req, res) => {
+    //     // Assuming user data is available in req.user after successful authentication
+    //     const userData = req.user;
 
-        // Generate a JWT
-        const token = jwt.sign(userData, process.env.SECRET, {
-            expiresIn: "1h", // Set the token expiration time
-        });
-
-        // Send the JWT as a response to the client
-        res.json({ token });
-    }
+    //     // Send the JWT as a response to the client
+    //     res.json({ token });
+    // }
 );
+
+router.get("/auth/getjwt", async (req, res) => {
+    if (req.user) {
+        try {
+            const userForToken = { id: req.user.id };
+            const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: jwtExpiration });
+            res.status(200).send(token);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ error: true, message: req.session.messages });
+        }
+    } else if (!req.user) {
+        res.status(401).json({ error: true, message: req.session.messages });
+    }
+});
 
 //router.get("/auth/facebook", passport.authenticate("facebook"));
 
