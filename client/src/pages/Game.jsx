@@ -21,7 +21,7 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
     const totalCharactersFound = useRef(null);
     const totalCharacters = useRef(null);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     // Function to open the modal
     const openModal = () => {
