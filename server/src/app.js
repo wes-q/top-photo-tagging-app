@@ -50,8 +50,15 @@ app.use(
     })
 );
 
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Handle all other routes by serving the index.html file
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 // app.set("views", path.join(__dirname, "views"));
-app.use(express.static("dist"));
+// app.use(express.static("dist"));
 // Serve images like profile photos
 // app.use(express.static("uploads"));
 app.use("/static", express.static("uploads"));
