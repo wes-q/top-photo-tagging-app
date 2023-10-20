@@ -227,7 +227,7 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
                     {characterLocations.map((character, index) => (
                         <div className="flex gap-1 items-center w-full transition-colors" key={character.id}>
                             <img className="h-auto max-h-12 w-10 select-none" src={character.imageSrc} alt={character.charName} />
-                            <div className="flex flex-col justify-start w-20 items-start text-left">
+                            <div className="flex flex-col justify-start w-full items-start text-left">
                                 <div>
                                     {characterFound[index] ? (
                                         <motion.div initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: "easeIn" }}>
@@ -237,7 +237,7 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
                                         <div className="w-5 h-5"></div>
                                     )}
                                 </div>
-                                <span>{character.charName}</span>
+                                <span className="text-ellipsis whitespace-nowrap overflow-hidden">{character.charName}</span>
                             </div>
                         </div>
                     ))}

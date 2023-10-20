@@ -20,8 +20,6 @@ const GetJwt = () => {
     useEffect(() => {
         getJwt();
     }, []);
-
-    return <div>Authenticating user...</div>;
 };
 
 export default GetJwt;
