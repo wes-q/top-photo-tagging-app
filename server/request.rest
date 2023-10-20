@@ -64,12 +64,12 @@ POST http://localhost:3001/api/characterLocations/
 content-type: application/json
 
 {
-    "puzzle": "puzzle4",
-    "charName": "Kamaji",
-    "xMin": 55.6,
-    "xMax": 66.63,
-    "yMin": 27.20,
-    "yMax": 29.22
+    "puzzle": "puzzle3",
+    "charName": "King Boo",
+    "xMin": 23.34,
+    "xMax": 32.9,
+    "yMin": 50.23,
+    "yMax": 56.64
 }
 
 ###

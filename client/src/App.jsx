@@ -25,7 +25,6 @@ function App() {
     const [showStartTimer, setShowStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
     const [game, setGame] = useState(null);
-    const [isForLeaderBoard, setIsForLeaderboard] = useState(null);
 
     useEffect(() => {
         const getUserOauth = async () => {
@@ -36,6 +35,9 @@ function App() {
                 console.log(data);
                 setUser(data);
                 setNotification({ message: "Login successful!", type: "success" });
+                setTimeout(() => {
+                    setNotification(null);
+                }, 1000);
             } catch (err) {
                 // if there is no user found, or if there is duplicate record with another provider it will catch error
                 // console.log(err);

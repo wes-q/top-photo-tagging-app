@@ -142,8 +142,9 @@ passport.use(
                 console.log(`EMAIL: ${email}`);
                 console.log(`PROFILE PHOTO: ${profilePhoto}`);
 
-                const currentUser = await User.findOne({ email });
+                const currentUser = await User.findOne({ email }); //TODO: FIx possible bug of having duplicate emails with unverified ones.
 
+                // If authenticated user is not yet existing on the local database, then save it.
                 if (!currentUser) {
                     console.log("User email not found on users DB");
                     const newUser = new User({
@@ -164,7 +165,7 @@ passport.use(
                     return done(null, false, { message: `Sorry! We were unable to log you in with that login method.\nPlease log in with the current social provider linked to your account, either Google or GitHub.` });
                 }
 
-                currentUser.lastVisited = new Date();
+                currentUser.lastVisited = new Date(); //TODO: What is the purpose of this code? Need to save afterward?
                 return done(null, currentUser);
             } catch (error) {
                 return done(error);
@@ -210,7 +211,19 @@ router.get(
         failureRedirect: `${config.FRONTEND_URL}/login`,
         successRedirect: config.FRONTEND_URL,
         failureMessage: true, // Capture failure message
-    })
+    }),
+    (req, res) => {
+        // Assuming user data is available in req.user after successful authentication
+        const userData = req.user;
+
+        // Generate a JWT
+        const token = jwt.sign(userData, process.env.SECRET, {
+            expiresIn: "1h", // Set the token expiration time
+        });
+
+        // Send the JWT as a response to the client
+        res.json({ token });
+    }
 );
 
 //router.get("/auth/facebook", passport.authenticate("facebook"));

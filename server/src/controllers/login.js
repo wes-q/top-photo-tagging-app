@@ -70,7 +70,7 @@ loginRouter.post("/api/login-local", async (request, response, next) => {
             } else {
                 console.log("Password is valid");
                 const userForToken = { id: userWithMatchingPassword._id };
-                const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 });
+                const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: jwtExpiration });
                 response.status(200).send(token);
             }
         }
