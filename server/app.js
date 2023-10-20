@@ -1,4 +1,4 @@
-const config = require("./utils/config");
+const config = require("./src/utils/config");
 const express = require("express");
 const app = express();
 
@@ -6,15 +6,15 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
-const usersRouter = require("./controllers/users");
-const loginRouter = require("./controllers/login");
-const authRouter = require("./controllers/auth");
-const emailRouter = require("./controllers/email");
-const characterLocationsRouter = require("./controllers/characterLocations");
-const scoresRouter = require("./controllers/scores");
+const usersRouter = require("./src/controllers/users");
+const loginRouter = require("./src/controllers/login");
+const authRouter = require("./src/controllers/auth");
+const emailRouter = require("./src/controllers/email");
+const characterLocationsRouter = require("./src/controllers/characterLocations");
+const scoresRouter = require("./src/controllers/scores");
 
-const middleware = require("./utils/middleware");
-const winstonLogger = require("./utils/winstonLogger");
+const middleware = require("./src/utils/middleware");
+const winstonLogger = require("./src/utils/winstonLogger");
 
 const mongoose = require("mongoose");
 
@@ -23,6 +23,8 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
+
+const path = require("path");
 
 mongoose.set("strictQuery", false);
 
