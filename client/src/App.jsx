@@ -108,9 +108,9 @@ function App() {
                     <Route path="verification-successful" element={<VerificationSuccessful />}></Route>
                     <Route path="verification-nothing" element={<VerificationNothing />}></Route>
                     <Route path="update-profile" element={<UpdateProfile user={user} setUser={setUser} setNotification={setNotification} />}></Route>
+                    <Route path="getjwt" element={<GetJwt />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
-                <Route path="getjwt" element={<GetJwt />} />
             </>
         )
     );
