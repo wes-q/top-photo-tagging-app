@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 
-const Leaderboard = () => {
+const LeaderboardTable = ({ selectedGame }) => {
     const [scores, setScores] = useState(null);
 
     const getScores = async () => {
         try {
             const { data } = await axios.get("/api/scores");
-            data.sort((a, b) => a.seconds - b.seconds);
+            const filteredScores = data.filter((score) => score.puzzle === selectedGame.puzzle);
+            console.log(filteredScores);
+
+            filteredScores.sort((a, b) => a.seconds - b.seconds);
 
             console.log(data);
-            setScores(data);
+            setScores(filteredScores);
         } catch (error) {
             console.log(error);
         }
@@ -19,10 +22,10 @@ const Leaderboard = () => {
 
     useEffect(() => {
         getScores();
-    }, []);
+    }, [selectedGame]);
 
     return (
-        <table className="text-xs sm:text-base overflow-hidden border-spacing-0 border-separate text-light-background w-full max-w-[750px] shadow-md">
+        <table className="mx-auto text-xs sm:text-base overflow-hidden border-spacing-0 border-separate text-light-background w-full max-w-[750px] shadow-md select-none">
             <thead className="bg-slate-300 dark:bg-slate-800">
                 <tr className="text-light-text dark:text-dark-text">
                     <td className="p-4">Rank</td>
@@ -44,7 +47,7 @@ const Leaderboard = () => {
                         <tr key={index} className="text-black even:bg-slate-200 first:bg-cyan-400">
                             <td className="p-4">{index + 1}</td>
                             <td className="flex items-center p-4 overflow-hidden text-ellipsis max-w-[150px]">
-                                <img className="w-6 h-6 rounded-full mr-2 whitespace-nowrap object-cover" src={score.user.profilePhoto || "./src/icons/noprofile.jpg"} alt="profile" />
+                                <img className="sm:w-10 sm:h-10 w-6 h-6 rounded-full mr-2 whitespace-nowrap object-cover" src={score.user.profilePhoto || "./src/icons/noprofile.jpg"} alt="profile" />
                                 {score.user.displayName || score.user.firstName}
                             </td>
                             <td className="p-4">{score.seconds}s</td>
@@ -53,8 +56,9 @@ const Leaderboard = () => {
                     );
                 })}
             </tbody>
+            {!scores?.length && <div className="p-2">No scores recorded yet</div>}
         </table>
     );
 };
 
-export default Leaderboard;
+export default LeaderboardTable;

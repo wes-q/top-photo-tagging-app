@@ -9,43 +9,13 @@ import VerificationNothing from "./pages/VerificationNothing";
 import UpdateProfile from "./pages/UpdateProfile";
 import About from "./pages/About";
 import Game from "./pages/Game";
-import GameList from "./pages/GameList";
-// import Game2 from "./pages/Game2";
-// import Game3 from "./pages/Game3";
-// import Game4 from "./pages/Game4";
-import Leaderboard from "./pages/Leaderboard";
+import LeaderboardPage from "./pages/LeaderboardPage";
 
 import loginService from "./services/login";
 import axios from "axios";
+import PlayPage from "./pages/PlayPage";
 
 axios.defaults.withCredentials = true;
-
-const gamesData = [
-    {
-        id: 1,
-        name: "Smash Bros 1",
-        imageSrc: "/puzzle1.jpg",
-        puzzle: "puzzle1",
-    },
-    {
-        id: 2,
-        name: "Smash Bros 2",
-        imageSrc: "/puzzle2.jpg",
-        puzzle: "puzzle2",
-    },
-    {
-        id: 3,
-        name: "Super Mario",
-        imageSrc: "/puzzle3.webp",
-        puzzle: "puzzle3",
-    },
-    {
-        id: 4,
-        name: "Anomaly World",
-        imageSrc: "/puzzle4.jpg",
-        puzzle: "puzzle4",
-    },
-];
 
 function App() {
     const [notification, setNotification] = useState(null);
@@ -55,6 +25,7 @@ function App() {
     const [showStartTimer, setShowStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
     const [game, setGame] = useState("");
+    const [isForLeaderBoard, setIsForLeaderboard] = useState(null);
 
     useEffect(() => {
         const getUserOauth = async () => {
@@ -137,10 +108,10 @@ function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<RootLayout notification={notification} setNotification={setNotification} user={user} showFooter={showFooter} showStartTimer={showStartTimer} setSeconds={setSeconds} seconds={seconds} />}>
-                <Route index element={<GameList gamesData={gamesData} setGame={setGame} />} />
+                <Route index element={<PlayPage setGame={setGame} />} />
                 <Route path="login" element={<Login setNotification={setNotification} setUserToken={setUserToken} />}></Route>
                 <Route path="game" element={<Game game={game} setShowFooter={setShowFooter} setShowStartTimer={setShowStartTimer} seconds={seconds} setSeconds={setSeconds} />}></Route>
-                <Route path="leaderboard" element={<Leaderboard />}></Route>
+                <Route path="leaderboard" element={<LeaderboardPage />}></Route>
                 <Route path="about" element={<About />}></Route>
                 <Route path="signup" element={<SignupForm setNotification={setNotification} />}></Route>
                 <Route path="verification-successful" element={<VerificationSuccessful />}></Route>
