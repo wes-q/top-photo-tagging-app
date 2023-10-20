@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimCheck from "../icons/anim-check.svg?react";
 import axios from "axios";
 import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
 
 const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) => {
     const [x, setX] = useState(0);
@@ -18,11 +19,10 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
     const [characterLocations, setCharacterLocations] = useState([]);
     const [characterFound, setCharacterFound] = useState({});
     const [isUserLegit, setIsUserLegit] = useState(null);
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const totalCharactersFound = useRef(null);
     const totalCharacters = useRef(null);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const getCharacterLocations = async () => {
         try {
@@ -41,6 +41,11 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
     };
 
     useEffect(() => {
+        if (game == null) {
+            navigate("/");
+            return;
+        }
+
         getCharacterLocations();
         // Set showFooter to false when the component mounts
         setShowFooter(false);
@@ -155,6 +160,10 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
         setX(x);
         setY(y);
     };
+
+    if (game == null) {
+        return null;
+    }
 
     return (
         <>

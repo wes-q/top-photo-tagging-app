@@ -24,7 +24,7 @@ function App() {
     const [showFooter, setShowFooter] = useState(true);
     const [showStartTimer, setShowStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
-    const [game, setGame] = useState("");
+    const [game, setGame] = useState(null);
     const [isForLeaderBoard, setIsForLeaderboard] = useState(null);
 
     useEffect(() => {
