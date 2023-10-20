@@ -31,7 +31,7 @@ const gamesData = [
 
 function GameCard({ game, setGame }) {
     return (
-        <div className="flex grow flex-col p-6 shadow-md max-w-full w-[350px] h-[350px] bg-gray-800 dark:bg-dark-secondary rounded-lg">
+        <div className="flex flex-col p-6 shadow-md w-[350px] h-[350px] sm:h-96 bg-gray-800 dark:bg-dark-secondary rounded-lg">
             <img src={game.imageSrc} alt="game preview" className="h-[70%] object-cover rounded-t-lg" draggable="false" />
             <div className="flex flex-col items-center p-2">
                 <h2 className="text-lg text-center whitespace-nowrap mb-6">{game.name}</h2>
@@ -47,7 +47,7 @@ function GameCard({ game, setGame }) {
 function GameList({ setGame }) {
     // console.log(`GamesDATA ${gamesData}`);
     return (
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-6">
             {gamesData.map((game) => (
                 <GameCard key={game.id} game={game} setGame={setGame} />
             ))}

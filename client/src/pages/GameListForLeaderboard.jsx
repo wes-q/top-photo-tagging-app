@@ -41,7 +41,7 @@ function GameCard({ game, setSelectedGame, selectedGame }) {
         <div className={`flex flex-col p-3 w-36 h-36 bg-gray-800 dark:bg-dark-secondary rounded-lg cursor-pointer sm:w-60 sm:h-60 shadow-cyan-400/60 transition-shadow ${isSelectedGame && "shadow-lg"}`} onClick={handleGameSelect}>
             <img src={game.imageSrc} alt="game preview" className="h-[70%] object-cover rounded-t-lg" draggable="false" />
             <div className="flex flex-col items-center p-2">
-                <h2 className="text-sm sm:text-lg text-center whitespace-nowrap">{game.name}</h2>
+                <h2 className={`text-sm sm:text-lg text-center whitespace-nowrap ${isSelectedGame && "text-cyan-400"}`}>{game.name}</h2>
             </div>
         </div>
     );
