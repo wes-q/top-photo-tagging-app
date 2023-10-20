@@ -249,15 +249,15 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
 
 function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound, characterLocations }) {
     // Dropdown conditionally appears to the left or right to avoid overflow
-    const menuAdjustX = x > 80 ? -dotSize * 2.5 : dotSize * 1.5;
+    const menuAdjustX = x > 70 ? -dotSize * 2.5 : dotSize * 1.5;
 
     return (
         <motion.div
-            className="absolute flex flex-col border border-black bg-gray-800 rounded-lg text-sm z-50 overflow-hidden"
+            className="absolute flex flex-col border border-black bg-gray-800 rounded-lg text-xs z-50 overflow-hidden"
             style={{
                 left: x + "%",
                 top: y + "%",
-                width: dotSize * 2,
+                // width: dotSize * 2,
             }}
             initial={{ opacity: 0, scale: 0.3 }}
             animate={{ opacity: 1, scale: 1, x: menuAdjustX }}
@@ -265,17 +265,16 @@ function DropdownMenu({ dropdownRef, x, y, dotSize, handleSubmit, characterFound
             transition={{ duration: 0.2, ease: "easeIn" }}
             ref={dropdownRef}
         >
-            <div className="flex flex-col items-start">
-                {characterLocations.map((character, index) => (
-                    <div key={character.id}>
-                        {!characterFound[index] && (
-                            <button className="flex items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(index)}>
-                                <img src={character.imageSrc2} alt={character.charName} />
-                            </button>
-                        )}
-                    </div>
-                ))}
-            </div>
+            {characterLocations.map((character, index) => (
+                <div key={character.id} className="flex flex-col w-full">
+                    {!characterFound[index] && (
+                        <button className="flex text-left items-center hover:text-cyan-400 hover:bg-slate-700 w-full transition-colors" onClick={() => handleSubmit(index)}>
+                            {/* <img src={character.imageSrc} alt={character.charName} /> */}
+                            <span className="p-2 whitespace-nowrap w-full">{character.charName}</span>
+                        </button>
+                    )}
+                </div>
+            ))}
         </motion.div>
     );
 }
