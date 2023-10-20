@@ -17,21 +17,12 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
     const imageRef = useRef(null);
     const [characterLocations, setCharacterLocations] = useState([]);
     const [characterFound, setCharacterFound] = useState({});
+    const [isUserLegit, setIsUserLegit] = useState(null);
 
     const totalCharactersFound = useRef(null);
     const totalCharacters = useRef(null);
 
-    const [isModalOpen, setIsModalOpen] = useState(true);
-
-    // Function to open the modal
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    // Function to close the modal
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const getCharacterLocations = async () => {
         try {
@@ -110,26 +101,32 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
                 audioRefWin.current.play();
             }
 
-            // Save score to database
-            const endpoint = "http://localhost:3001/api/scores/";
-
-            const newScore = {
-                puzzle: game.puzzle,
-                seconds: seconds,
-            };
-
+            // Attempt to save score to database if the user is logged in
             const loggedUserToken = window.localStorage.getItem("loggedUserToken");
-            const headerConfig = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${loggedUserToken}`,
-                },
-            };
+            if (loggedUserToken) {
+                const endpoint = "http://localhost:3001/api/scores/";
 
-            try {
-                await axios.post(endpoint, newScore, headerConfig);
-            } catch (error) {
-                console.log(error);
+                const newScore = {
+                    puzzle: game.puzzle,
+                    seconds: seconds,
+                };
+
+                const headerConfig = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${loggedUserToken}`,
+                    },
+                };
+
+                try {
+                    await axios.post(endpoint, newScore, headerConfig);
+                    setIsUserLegit(true);
+                } catch (error) {
+                    console.log(error);
+                    setIsUserLegit(false);
+                }
+            } else {
+                setIsUserLegit(false);
             }
         }
     };
@@ -174,7 +171,7 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
                 Your browser does not support the audio element.
             </audio>
 
-            {isModalOpen && <Modal seconds={seconds}></Modal>}
+            {isModalOpen && <Modal seconds={seconds} isUserLegit={isUserLegit}></Modal>}
 
             <div className="relative w-fit mx-auto">
                 <img className="cursor-crosshair" src={game.imageSrc} alt="" onClick={handleClick} ref={imageRef} />
