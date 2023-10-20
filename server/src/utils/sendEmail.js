@@ -2,7 +2,8 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
 const sendEmail = (email, displayName, verificationToken) => {
-    const verificationLink = `http://localhost:3001/api/verify-email/?token=${verificationToken}`;
+    // const verificationLink = `http://localhost:3001/api/verify-email/?token=${verificationToken}`;
+    const verificationLink = `${config.FRONTEND_URL}/api/verify-email/?token=${verificationToken}`;
     console.log(verificationLink);
 
     const transporter = nodemailer.createTransport({

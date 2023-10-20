@@ -26,7 +26,9 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
 
     const getCharacterLocations = async () => {
         try {
-            const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
+            // const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
+            const characterLocations = await axios.get("/api/characterLocations/");
+
             // console.log(characterLocations.data);
 
             // Filter based on the puzzle/game name
@@ -109,7 +111,8 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
             // Attempt to save score to database if the user is logged in
             const loggedUserToken = window.localStorage.getItem("loggedUserToken");
             if (loggedUserToken) {
-                const endpoint = "http://localhost:3001/api/scores/";
+                // const endpoint = "http://localhost:3001/api/scores/";
+                const endpoint = "/api/scores/";
 
                 const newScore = {
                     puzzle: game.puzzle,

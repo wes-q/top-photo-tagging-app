@@ -73,10 +73,7 @@ function App() {
                         Authorization: `Bearer ${loggedUserToken}`,
                     },
                 };
-
-                console.log("PASOK BA4");
                 const data = await loginService.loginSuccess(headerConfig);
-                console.log("PASOK BA5");
                 setUser(data.user);
                 setNotification({ message: "Login successful!", type: "success" });
                 setTimeout(() => {

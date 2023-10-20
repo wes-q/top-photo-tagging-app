@@ -73,7 +73,9 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                 // const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` }, headerConfig);
                 // console.log(userData);
                 // }
-                const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` });
+                // const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` });
+                const userData = await userService.update(user.id, { profilePhoto: `${config.FRONTEND_URL}/static/${response.data.filename}` });
+
                 // console.log(userData);
                 setUser(userData);
 
