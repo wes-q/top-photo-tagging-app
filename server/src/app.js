@@ -52,7 +52,7 @@ app.use(
 );
 
 // app.set("views", path.join(__dirname, "views"));
-// app.use(express.static("dist"));
+app.use(express.static("dist"));
 // Serve images like profile photos
 // app.use(express.static("uploads"));
 app.use("/static", express.static("uploads"));
