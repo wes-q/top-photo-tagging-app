@@ -37,8 +37,12 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
         try {
             const characterLocations = await axios.get("http://localhost:3001/api/characterLocations/");
             // console.log(characterLocations.data);
-            setCharacterLocations(characterLocations.data);
-            totalCharacters.current = characterLocations.data.length;
+
+            // Filter based on the puzzle/game name
+            const filteredCharacterLocations = characterLocations.data.filter((location) => location.puzzle === game.puzzle);
+            // console.log(filteredCharacterLocations);
+            setCharacterLocations(filteredCharacterLocations);
+            totalCharacters.current = filteredCharacterLocations.length;
             console.log(`totalCharacters ${totalCharacters.current}`);
         } catch (error) {
             console.log(error);
@@ -110,7 +114,7 @@ const Game = ({ setShowFooter, setShowStartTimer, seconds, setSeconds, game }) =
             const endpoint = "http://localhost:3001/api/scores/";
 
             const newScore = {
-                puzzle: "puzzle1", //TODO remove hardcoded game
+                puzzle: game.puzzle,
                 seconds: seconds,
             };
 
