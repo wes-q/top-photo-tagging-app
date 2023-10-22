@@ -40,4 +40,4 @@ Tablet Laptop vs Mobile Screenshots
 - Client-side routing using React router
 - Design using Tailwind css 
 
-
+## Credits to The Odin Project: https://www.theodinproject.com/lessons/nodejs-where-s-waldo-a-photo-tagging-app
