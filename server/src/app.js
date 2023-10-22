@@ -1,4 +1,4 @@
-const config = require("./src/utils/config");
+const config = require("./utils/config");
 const express = require("express");
 const app = express();
 
@@ -6,15 +6,15 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
-const usersRouter = require("./src/controllers/users");
-const loginRouter = require("./src/controllers/login");
-const authRouter = require("./src/controllers/auth");
-const emailRouter = require("./src/controllers/email");
-const characterLocationsRouter = require("./src/controllers/characterLocations");
-const scoresRouter = require("./src/controllers/scores");
+const usersRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
+const authRouter = require("./controllers/auth");
+const emailRouter = require("./controllers/email");
+const characterLocationsRouter = require("./controllers/characterLocations");
+const scoresRouter = require("./controllers/scores");
 
-const middleware = require("./src/utils/middleware");
-const winstonLogger = require("./src/utils/winstonLogger");
+const middleware = require("./utils/middleware");
+const winstonLogger = require("./utils/winstonLogger");
 
 const mongoose = require("mongoose");
 
@@ -52,15 +52,24 @@ app.use(
     })
 );
 
-app.use(express.static(path.join(__dirname, "dist")));
+// // // Handle all other routes by serving the index.html file
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
 
-// Handle all other routes by serving the index.html file
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
+
+// app.get("/*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
+
+app.use(express.static("dist"));
+// app.use(express.static(path.join(__dirname, "dist")));
 
 // app.set("views", path.join(__dirname, "views"));
-// app.use(express.static("dist"));
+
 // Serve images like profile photos
 // app.use(express.static("uploads"));
 app.use("/static", express.static("uploads"));
@@ -95,6 +104,14 @@ app.use("/", loginRouter);
 app.use("/", emailRouter);
 app.use("/", characterLocationsRouter);
 app.use("/", scoresRouter);
+
+app.use("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/index.html"), function (err) {
+        if (err) {
+            res.status(500).send(err);
+        }
+    });
+});
 
 app.use(middleware.errorHandler);
 

@@ -256,7 +256,7 @@ router.get(
     "/auth/github/callback",
     passport.authenticate("github", {
         failureRedirect: `${config.FRONTEND_URL}/login`,
-        successRedirect: config.FRONTEND_URL,
+        successRedirect: `${config.FRONTEND_URL}/getjwt`,
         failureMessage: true, // Capture failure message
         // failureRedirect: `http://localhost:1111`,
         // successRedirect: `http://localhost:8888`,
