@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
+import WesbookLogo from "../icons/wesbooklogo.svg?react";
 
 const LeaderboardTable = ({ selectedGame }) => {
     const [scores, setScores] = useState(null);
@@ -47,7 +48,7 @@ const LeaderboardTable = ({ selectedGame }) => {
                         <tr key={index} className="text-black even:bg-slate-200 first:bg-cyan-400">
                             <td className="p-4">{index + 1}</td>
                             <td className="flex items-center p-4 overflow-hidden text-ellipsis max-w-[150px]">
-                                <img className="sm:w-10 sm:h-10 w-6 h-6 rounded-full mr-2 whitespace-nowrap object-cover" src={score.user.profilePhoto || "./src/icons/noprofile.jpg"} alt="profile" />
+                                <img className="sm:w-10 sm:h-10 w-6 h-6 rounded-full mr-2 whitespace-nowrap object-cover" src={score.user.profilePhoto || "/noprofile.jpg"} alt="profile" />
                                 {score.user.displayName || score.user.firstName}
                             </td>
                             <td className="p-4">{score.seconds}s</td>
