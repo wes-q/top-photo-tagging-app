@@ -35,4 +35,9 @@ Tablet Laptop vs Mobile Screenshots
 - Serving static files (user can upload a profile photo)
 - Implement game sound effects
 - DOM manipulation using React
+- Input Validation (frontend, backend and database)
+- Responsive app design fit for mobile and desktop usage
+- Client-side routing using React router
+- Design using Tailwind css 
+
 
