@@ -4,7 +4,7 @@
 Note: Kindly wait for the website to load for the first time,
 free hosting service is implementing spindown on inactivity)
 
-Tablet Laptop vs Mobile Screenshots
+### Tablet Laptop vs Mobile Screenshots
 ![1](https://github.com/iamwesofph/top-photo-tagging-app/assets/121594156/645b6db7-99a6-4204-9636-83b8e017933b)
 ![1a](https://github.com/iamwesofph/top-photo-tagging-app/assets/121594156/19dec7de-af47-4666-be9c-5088395c19fb)
 ![2](https://github.com/iamwesofph/top-photo-tagging-app/assets/121594156/0613c09c-bde0-4d9a-8165-00d376c37b4f)
