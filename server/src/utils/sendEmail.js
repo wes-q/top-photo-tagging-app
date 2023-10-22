@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
+const config = require("../utils/config");
 
 const sendEmail = (email, displayName, verificationToken) => {
     // const verificationLink = `http://localhost:3001/api/verify-email/?token=${verificationToken}`;
