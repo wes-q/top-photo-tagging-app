@@ -1,6 +1,6 @@
 # The Odin Project - A Photo Tagging App (Where's Waldo Game)
 ## Project Goals - Learn to deploy 
-### Live Preview - https://top-photo-tagging-app-waldo.onrender.com/
+## Live Preview - https://top-photo-tagging-app-waldo.onrender.com/
 Note: Kindly wait for the website to load for the first time,
 free hosting service is implementing spindown on inactivity)
 
@@ -40,4 +40,4 @@ Tablet Laptop vs Mobile Screenshots
 - Client-side routing using React router
 - Design using Tailwind css 
 
-## Credits to The Odin Project: https://www.theodinproject.com/lessons/nodejs-where-s-waldo-a-photo-tagging-app
+### Credits to The Odin Project: https://www.theodinproject.com/lessons/nodejs-where-s-waldo-a-photo-tagging-app
