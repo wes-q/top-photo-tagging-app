@@ -19,23 +19,20 @@ Tablet Laptop vs Mobile Screenshots
 ![7a](https://github.com/iamwesofph/top-photo-tagging-app/assets/121594156/9759e2a1-2992-4a54-9c44-f105c1deb38c)
 
 ## What I learned from this project:
-Frontend and backend integration and production deployment
-REST APIs
-JWT (Json Web Tokens)
-Express
-Nodemailer (for sending verification emails)
-User Authentication (local signup)
-Oauth User Authentication (login via Google)
-Oauth User Authentication (login via Facebook)
-Oauth User Authentication (login via Github)
-User Authorization (certain actions are available only to verified users)
-Effective data modeling using MongoDB / Mongoose
-User sessions stored in database
-Handling of expired session
-Serving static files (user can upload profile photo)
-Implement game sound effects
-DOM manipulation using React
-Input Validation (frontend, backend and database)
-Responsive app design fit for mobile and desktop usage
-Client-side routing using React router
-Design using Tailwind css
+- Frontend and backend integration and production deployment
+- REST APIs
+- JWT (Json Web Tokens)
+- Express
+- Nodemailer (for sending verification emails)
+- User Authentication (local signup)
+- Oauth User Authentication (login via Google)
+- Oauth User Authentication (login via Facebook)
+- Oauth User Authentication (login via Github)
+- User Authorization (certain actions are available only to verified users)
+- Effective data modeling using MongoDB / Mongoose
+- User sessions stored in the database
+- Handling of expired sessions
+- Serving static files (user can upload a profile photo)
+- Implement game sound effects
+- DOM manipulation using React
+
