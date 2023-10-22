@@ -105,6 +105,7 @@ app.use("/", emailRouter);
 app.use("/", characterLocationsRouter);
 app.use("/", scoresRouter);
 
+// Catch-all route to handle client side routing
 app.use("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "../dist/index.html"), function (err) {
         if (err) {

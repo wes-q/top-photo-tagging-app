@@ -74,7 +74,7 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                 // console.log(userData);
                 // }
                 // const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` });
-                const userData = await userService.update(user.id, { profilePhoto: `${config.FRONTEND_URL}/static/${response.data.filename}` });
+                const userData = await userService.update(user.id, { profilePhoto: `${import.meta.env.VITE_SERVER_URL}/static/${response.data.filename}` });
 
                 // console.log(userData);
                 setUser(userData);
@@ -84,13 +84,14 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                     setNotification(null);
                 }, 5000);
             } catch (error) {
-                if (error.response.data.error) {
-                    const firstError = error.response.data.error;
-                    setNotification({ message: firstError, type: "error" });
-                    setTimeout(() => {
-                        setNotification(null);
-                    }, 5000);
-                }
+                // if (error.response.data.error) {
+                //     const firstError = error.response.data.error;
+                //     setNotification({ message: firstError, type: "error" });
+                //     setTimeout(() => {
+                //         setNotification(null);
+                //     }, 5000);
+                // }
+                console.log(error);
             }
         } else {
             return;

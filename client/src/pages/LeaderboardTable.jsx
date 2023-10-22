@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
-import WesbookLogo from "../icons/wesbooklogo.svg?react";
 
 const LeaderboardTable = ({ selectedGame }) => {
     const [scores, setScores] = useState(null);
@@ -24,6 +23,10 @@ const LeaderboardTable = ({ selectedGame }) => {
     useEffect(() => {
         getScores();
     }, [selectedGame]);
+
+    if (!selectedGame) {
+        return;
+    }
 
     return (
         <table className="mx-auto text-xs sm:text-base overflow-hidden border-spacing-0 border-separate text-light-background w-full max-w-[750px] shadow-md select-none">
