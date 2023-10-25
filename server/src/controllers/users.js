@@ -6,11 +6,10 @@ const User = require("../models/user");
 const config = require("../utils/config");
 const { validateRequestSchema, userExtractor } = require("../utils/middleware");
 
+// const path = require("path");
+// const fs = require("fs");
+
 const multer = require("multer");
-const path = require("path");
-
-const fs = require("fs");
-
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
