@@ -11,35 +11,65 @@ const path = require("path");
 
 const fs = require("fs");
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads");
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
-    },
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+    secure: true,
 });
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, "uploads");
+//     },
+//     filename: function (req, file, cb) {
+//         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//         cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
+//     },
+// });
+const storage = multer.memoryStorage();
+
+async function handleUpload(file) {
+    const res = await cloudinary.uploader.upload(file, {
+        resource_type: "auto",
+    });
+    return res;
+}
 
 const upload = multer({ storage: storage });
 
-usersRouter.post("/api/profile", upload.single("image"), function (req, res, next) {
-    console.log(`FILE UPLOADED: ${req.file}`);
-    res.status(200).json(req.file);
-});
+// Uploads profile photo file to the uploads folder
+// usersRouter.post("/api/profile", upload.single("image"), function (req, res, next) {
+//     console.log(`FILE UPLOADED: ${req.file}`);
+//     // res.status(200).json(req.file);
+//     res.status(200).json({ message: "Image uploaded to Cloudinary!", public_id: req.file.public_id });
+// });
 
-usersRouter.post("/api/profile-delete", function (req, res, next) {
-    const filePath = req.body.filePath;
-    console.log(req.body.filePath);
-    if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        console.log(`File ${filePath} has been deleted.`);
-        res.status(200).send(`File ${filePath} has been deleted.`);
-    } else {
-        console.log(`File ${filePath} does not exist.`);
-        res.status(200).send(`File ${filePath} does not exist.`);
+usersRouter.post("/api/profile", upload.single("image"), async (req, res) => {
+    try {
+        const b64 = Buffer.from(req.file.buffer).toString("base64");
+        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+        const cldRes = await handleUpload(dataURI);
+        res.status(200).json(cldRes.secure_url);
+    } catch (error) {
+        console.log(error);
+        res.send({
+            message: error.message,
+        });
     }
 });
+
+// Delete file from server's file storage.  Removed because app is now using Cloudinary to store
+// usersRouter.post("/api/profile-delete", function (req, res, next) {
+//     const filePath = req.body.filePath;
+//     console.log(req.body.filePath);
+//     if (fs.existsSync(filePath)) {
+//         fs.unlinkSync(filePath);
+//         console.log(`File ${filePath} has been deleted.`);
+//         res.status(200).send(`File ${filePath} has been deleted.`);
+//     } else {
+//         console.log(`File ${filePath} does not exist.`);
+//         res.status(200).send(`File ${filePath} does not exist.`);
+//     }
+// });
 
 usersRouter.post(
     "/api/users",

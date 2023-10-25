@@ -58,7 +58,7 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                 form.append("image", file, "image.jpg");
                 // Save the new profile photo to the file storage
                 const response = await axios.post("/api/profile", form);
-
+                console.log(`RESPONSE FROM API/PROFILE: ${response.data}`);
                 // Save the new profile photo's URL to the DB but re-authenticate first/
                 // const loggedUserToken = window.localStorage.getItem("loggedUserToken");
 
@@ -74,7 +74,8 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
                 // console.log(userData);
                 // }
                 // const userData = await userService.update(user.id, { profilePhoto: `http://localhost:3001/static/${response.data.filename}` });
-                const userData = await userService.update(user.id, { profilePhoto: `${import.meta.env.VITE_SERVER_URL}/static/${response.data.filename}` });
+                // const userData = await userService.update(user.id, { profilePhoto: `${import.meta.env.VITE_SERVER_URL}/static/${response.data.filename}` });
+                const userData = await userService.update(user.id, { profilePhoto: response.data });
 
                 // console.log(userData);
                 setUser(userData);
@@ -104,27 +105,26 @@ const ProfilePhotoUpload = ({ setNotification, user, profilePhoto, setUser }) =>
             setSelectedImage(null);
 
             try {
-                const parts = user.profilePhoto.split("/static/"); // Split the URL at "/static/"
-                let partAfterStatic;
-                if (parts.length === 2) {
-                    partAfterStatic = parts[1]; // Get the part after "static/"
-                    console.log(partAfterStatic);
-                } else {
-                    console.log("URL format is not as expected.");
-                }
+                //     const parts = user.profilePhoto.split("/static/"); // Split the URL at "/static/"
+                //     let partAfterStatic;
+                //     if (parts.length === 2) {
+                //         partAfterStatic = parts[1]; // Get the part after "static/"
+                //         console.log(partAfterStatic);
+                //     } else {
+                //         console.log("URL format is not as expected.");
+                //     }
 
-                const filename = partAfterStatic;
-                //TODO Convert to .env file instead of hardcoded folder path
-                const filePath = `uploads/${filename}`;
-                console.log(`FILEPATH ${filePath}`);
+                //     const filename = partAfterStatic;
+                //     //TODO Convert to .env file instead of hardcoded folder path
+                //     const filePath = `uploads/${filename}`;
+                //     console.log(`FILEPATH ${filePath}`);
 
-                // Delete the old profile photo from the file storage
-                const response = await axios.post("/api/profile-delete", { filePath: filePath });
-                // console.log(response);
+                //     // Delete the old profile photo from the file storage
+                //     const response = await axios.post("/api/profile-delete", { filePath: filePath });
 
                 const userData = await userService.update(user.id, { profilePhoto: null });
                 setUser(userData);
-                console.log(userData);
+                // console.log(userData);
 
                 setNotification({ message: "Your profile picture has been removed", type: "success" });
                 setTimeout(() => {
